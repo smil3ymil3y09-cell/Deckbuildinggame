@@ -95,11 +95,11 @@ main{height:calc(100dvh - 63px);max-width:1500px;margin:0 auto;padding:12px clam
   <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Test wallet</label><strong id="wallet">£150</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div></div>
 </header>
 <main>
-  <div class="intro"><div><div class="eyebrow">Collection starts here</div><h1>THE<br>MARKET<span style="color:var(--mint)">.</span></h1><p class="subtitle">Five randomly generated Common cards. Every listing has at least one notable factor. Inspect the details, acquire favourites and protect up to 20 cards in your vault.</p></div><div class="actions"><button id="oddsBtn" class="btn outline">◫ &nbsp; Pull odds</button><button id="roundBtn" class="btn outline" title="Enter the next card battle">⚔ Round</button><button id="refreshBtn" class="btn primary">↻ Refresh · £2</button></div></div>
-  <div class="section-head"><div class="section-heading">01 &nbsp; / &nbsp; Today's selection <span class="tiny-dot"></span> <span id="refreshNo">Drop #1</span> <span class="round-label" id="roundLabel">Round 1</span></div><div class="section-note">10 Common effects · 10% each · Refresh cost rises per round</div></div>
+  <div class="intro"><div><div class="eyebrow">Collection starts here</div><h1>THE<br>MARKET<span style="color:var(--mint)">.</span></h1><p class="subtitle">Five randomly generated Common cards. Every listing has at least one notable factor. Inspect the details, acquire favourites and protect up to 20 cards in your vault.</p></div><div class="actions"><button id="oddsBtn" class="btn outline">◫ &nbsp; Pull odds</button><button id="roundBtn" class="btn outline" title="Enter the next card battle">⚔ Round</button><button id="refreshBtn" class="btn primary">↻ Refresh · £4</button></div></div>
+  <div class="section-head"><div class="section-heading">01 &nbsp; / &nbsp; Today's selection <span class="tiny-dot"></span> <span id="refreshNo">Drop #1</span> <span class="round-label" id="roundLabel">Round 1</span></div><div class="section-note">10 Common effects · 10% each · Refresh cost rises · resales pay 25%</div></div>
   <section aria-label="Five market cards" class="market-grid" id="marketGrid"></section>
   <div class="bottom-bar"><div class="end-note pack-shop" aria-label="Card packs">
-  <div class="pack-header"><b>▧ PACKS</b><span>Keep 1 · Sell 1 random</span></div>
+  <div class="pack-header"><b>▧ PACKS</b><span>Keep 1 · Liquidate 1 random (25%)</span></div>
   <div class="pack-buttons" id="packButtons">
     <button class="pack-btn" data-pack="1a" title="Normal 1A — 10 unfiltered cards; keep one, sell one random"> <strong>1A</strong><span>10 cards</span><em>£12</em></button>
     <button class="pack-btn" data-pack="1b" title="Normal 1B — 20 unfiltered cards; keep one, sell one random"> <strong>1B</strong><span>20 cards</span><em>£24</em></button>
@@ -124,7 +124,7 @@ main{height:calc(100dvh - 63px);max-width:1500px;margin:0 auto;padding:12px clam
 <div class="hovercard" id="hovercard" role="tooltip"></div>
 <div class="modal-backdrop" id="modal" aria-hidden="true"><div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalWindow"><div class="modal-top"><div class="h-eyebrow" id="modalHeading">CARD FILE</div><button class="modal-close" id="modalClose" aria-label="Close details">×</button></div><div id="modalContent"></div></div></div>
 <div class="pack-backdrop" id="packModal" aria-hidden="true"><div class="pack-window" role="dialog" aria-modal="true" aria-labelledby="packHeading">
- <div class="pack-top"><div><div class="pack-eyebrow">PACK OPENING · CHOOSE ONE TO KEEP</div><h2 id="packHeading">Normal 1A</h2><p id="packHelp">Tap a card to inspect it. Select one to keep; another will be sold at random.</p></div><button class="modal-close" id="packClose" aria-label="Return to shop">×</button></div>
+ <div class="pack-top"><div><div class="pack-eyebrow">PACK OPENING · CHOOSE ONE TO KEEP</div><h2 id="packHeading">Normal 1A</h2><p id="packHelp">Tap a card to inspect it. Select one to keep; another will be sold at random for 25% of market value.</p></div><button class="modal-close" id="packClose" aria-label="Return to shop">×</button></div>
  <div class="pack-workspace"><div class="pack-card-list" id="packList" aria-label="Pack card choices"></div><aside class="pack-inspect" id="packInspect"><p class="pack-hint">Pick a card to inspect its traits and price.</p></aside></div>
  <div class="pack-bottom"><span id="packProgress">0 / 10 viewed</span><button class="btn outline" id="packLater">Back to shop · Resume later</button></div>
  </div></div>
@@ -140,7 +140,8 @@ const PACKS={
  '2a':{label:'Vintage 2A',count:10,price:65,tier:'vintage'},
  '3a':{label:'God 3A',count:10,price:100,tier:'god'}
 };
-const REFRESH_BASE=2, REFRESH_STEP=2;
+const REFRESH_BASE=4, REFRESH_STEP=4;
+const SELL_RATE=.25; // Instant liquidation is intentionally below online value; collectors will later offer premiums.
 const CARDS=[
  {id:'nine',name:'Nine Lives',effect:'Changes the leftmost digit of this card’s online market value to 9.',short:'Leftmost price digit → 9',kind:'Market'},
  {id:'small',name:'Small Advantage',effect:'+1 to every Top Trumps matchup.',short:'+1 · All matchups',kind:'Matchup'},
@@ -153,7 +154,7 @@ const CARDS=[
  {id:'second',name:'Second Opinion',effect:'+1 to one randomly chosen matchup category when played.',short:'+1 · Random matchup',kind:'Matchup'},
  {id:'spark',name:'Elemental Nudge',effect:'+1 to Element matchups.',short:'+1 · Element matchup',kind:'Matchup'}
 ];
-const TYPE_RULES=[{id:'first',name:'First Edition',chance:.01,score:5,mult:5.5,tag:'gold'},{id:'limited',name:'Limited Edition',chance:.03,score:4,mult:3.4,tag:'purple'},{id:'alt',name:'Alt Art',chance:.06,score:3,mult:2.4,tag:'cyan'},{id:'art',name:'Art',chance:.12,score:2,mult:1.65,tag:'green'},{id:'serial',name:'Serialised Number',chance:.20,score:2,mult:1.45,tag:'grey'},{id:'unlimited',name:'Unlimited',chance:.65,score:1,mult:1,tag:'grey'}];
+const TYPE_RULES=[{id:'first',name:'First Edition',chance:.01,score:5,mult:3.5,tag:'gold'},{id:'limited',name:'Limited Edition',chance:.03,score:4,mult:2.3,tag:'purple'},{id:'alt',name:'Alt Art',chance:.06,score:3,mult:1.7,tag:'cyan'},{id:'art',name:'Art',chance:.12,score:2,mult:1.35,tag:'green'},{id:'serial',name:'Serialised Number',chance:.20,score:2,mult:1.2,tag:'grey'},{id:'unlimited',name:'Unlimited',chance:.65,score:1,mult:1,tag:'grey'}];
 const ELEMENTS=[{id:'fire',name:'Fire',icon:'🔥',beats:'Nature'},{id:'nature',name:'Nature',icon:'🌿',beats:'Water'},{id:'water',name:'Water',icon:'💧',beats:'Earth'},{id:'earth',name:'Earth',icon:'🪨',beats:'Lightning'},{id:'lightning',name:'Lightning',icon:'⚡',beats:'Fire'}];
 const PSA_WEIGHTS=[4,6,10,14,20,19,13,8,5,1];
 const PROTECT=[{id:'none',name:'No Foil',chance:.78},{id:'foil',name:'Foil',chance:.12},{id:'artfoil',name:'Back Art Foil',chance:.06},{id:'framed',name:'Framed',chance:.03},{id:'antimatter',name:'Anti-Matter',chance:.01}];
@@ -201,7 +202,7 @@ function el(c){return ELEMENTS.find(x=>x.id===c.element)||ELEMENTS[0]}
 function typesOf(c){return TYPE_RULES.filter(t=>c.types.includes(t.id))}
 function numericType(c){return typesOf(c).reduce((s,t)=>s+t.score,0)}
 function psaMult(c){return c.psa*.5}
-function calcPrice(c){if(c.protection==='framed'&&Number.isFinite(c.frozenPrice))return c.frozenPrice;let p=12*psaMult(c);
+function calcPrice(c){if(c.protection==='framed'&&Number.isFinite(c.frozenPrice))return c.frozenPrice;let p=2.4*psaMult(c);
  for(const t of typesOf(c))p*=t.mult;
  if(c.quality==='near')p*=1.5;
  if(c.quality==='perfect')p*=2;
@@ -216,12 +217,13 @@ function calcPrice(c){if(c.protection==='framed'&&Number.isFinite(c.frozenPrice)
  }
  return Math.round(p*100)/100;
 }
+function saleValue(c){return Math.max(.01,Math.floor(calcPrice(c)*SELL_RATE*100)/100);}
 function visualType(c){for(const t of ['first','limited','alt','art','unlimited'])if(c.types.includes(t))return t;return 'default'}
 function condLabels(c){const a=[c.quality==='perfect'?'Perfect Condition':c.quality==='near'?'Near Mint':'Normal'];
  if(c.conditions.misprinted)a.push('Misprinted');if(c.conditions.ink)a.push('Ink Error ×'+c.inkFactor.toFixed(1));if(c.conditions.ripped)a.push('Ripped');if(c.conditions.crimped)a.push('Crimped');if(c.conditions.burnt)a.push('Burnt');if(c.played>0)a.push('Played '+c.played+' times');return a;
 }
 function protectedName(c){return PROTECT.find(x=>x.id===c.protection)?.name||'No Foil'}
-let market=generateMarket(),saved=[],wallet=150,drop=1,round=1,refreshCount=0,pendingPack=null,packSelection=null;
+let market=generateMarket(),saved=[],wallet=75,drop=1,round=1,refreshCount=0,pendingPack=null,packSelection=null;
 let enemy={lineup:[],pocket:[],log:[]}, lineup=[],inBattle=false,selectedForBattle=null;
 try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&Array.isArray(old.saved)&&Array.isArray(old.market)&&Number.isFinite(old.wallet)){saved=old.saved.slice(0,20);market=old.market.length===5?old.market:market;wallet=old.wallet;drop=old.drop||1;round=Number.isFinite(old.round)&&old.round>=1?old.round:1;refreshCount=Number.isFinite(old.refreshCount)&&old.refreshCount>=0?old.refreshCount:0;pendingPack=old.pendingPack&&PACKS[old.pendingPack.id]&&Array.isArray(old.pendingPack.cards)&&old.pendingPack.cards.length===PACKS[old.pendingPack.id].count?old.pendingPack:null;
  enemy=old.enemy&&Array.isArray(old.enemy.lineup)&&Array.isArray(old.enemy.pocket)?old.enemy:enemy;
@@ -246,7 +248,7 @@ function cardHTML(c){const a=arche(c),ty=visualType(c),e=el(c),cnd=c.conditions;
 function activeTypes(c){return typesOf(c).map(t=>`<span class="tag ${t.tag}">${safe(t.name)} · +${t.score}</span>`).join('')}
 function activeConds(c){return condLabels(c).map(s=>{const kind=s.startsWith('Perfect')||s.startsWith('Near')?'good':s.startsWith('Ripped')||s.startsWith('Burnt')?'bad':s.startsWith('Misprinted')?'gold':'';return `<span class="tag ${kind}">${safe(s)}</span>`}).join('')}
 function fullData(c,compact=false){const a=arche(c),element=el(c),price=money(calcPrice(c)),pname=protectedName(c),burnRate=c.conditions.burnt?(c.conditions.misprinted?4:2):1,priceBonus=c.kind==='nine'?'Leftmost online-price digit becomes 9.':c.kind==='bargain'?'Online price +2% applied.':'No market-price ability.';
- const mid=`<div class="detail-grid"><div class="detail-cell"><label>Online market value</label><b>${price}</b></div><div class="detail-cell"><label>PSA grade / value ×</label><b>${c.psa} / ×${psaMult(c).toFixed(1)}</b></div><div class="detail-cell"><label>Type matchup</label><b>${numericType(c)} points</b></div><div class="detail-cell"><label>Element</label><b>${element.icon} ${element.name}</b></div></div>`;
+ const mid=`<div class="detail-grid"><div class="detail-cell"><label>Online market value</label><b>${price}</b></div><div class="detail-cell"><label>Instant cash offer (25%)</label><b>${money(saleValue(c))}</b></div><div class="detail-cell"><label>PSA grade / value ×</label><b>${c.psa} / ×${psaMult(c).toFixed(1)}</b></div><div class="detail-cell"><label>Type matchup</label><b>${numericType(c)} points</b></div><div class="detail-cell"><label>Element</label><b>${element.icon} ${element.name}</b></div></div>`;
  const basic=`<div class="h-group"><b>Types · Permanent</b><div class="tags">${activeTypes(c)}</div></div><div class="h-group"><b>Conditions</b><div class="tags">${activeConds(c)}</div></div><div class="h-group"><b>Protection</b><div class="tags"><span class="tag">${safe(pname)}${c.foilRounds?' · '+c.foilRounds+'/3 rounds':''}</span></div></div>`;
  const details=`${c.serial?`<div class="detail-note">Serial number: <strong>#${String(c.serial).padStart(5,'0')}</strong> of 100,000</div>`:''}<div class="detail-note">Element advantage: ${element.name} beats ${element.beats}. ${c.protection==='framed'?'Framed: all card properties and online price are frozen.':c.protection==='antimatter'?'Anti-Matter: gains PSA instead of deteriorating; disintegrates at PSA 10.':c.protection==='none'?`Unprotected: −${burnRate} PSA per future played round (floor 1).`:'Foil: protection lasts 3 played rounds, then automatically detaches.'} Played history increments when used, including under protection.</div><div class="detail-note">${priceBonus} The card loses PSA only when actually played without protection. Cards left in storage do not deteriorate.</div>`;
  return `<div class="h-eyebrow">COMMON · ${safe(a.kind)}</div><div class="h-title">${safe(a.name)}</div><div class="h-effect">${safe(a.effect)}</div>${mid}${basic}${compact?'':details}`;
@@ -259,9 +261,9 @@ function render(){grid.innerHTML=market.map((c,i)=>{const owned=saved.some(s=>s.
 function findCard(id){return [...market,...saved].find(c=>c.id===id)}
 function tooltipAt(elm,c){if(window.matchMedia('(hover: none), (pointer: coarse)').matches||modal.classList.contains('open'))return;hover.innerHTML=fullData(c,true);hover.classList.add('visible');const r=elm.getBoundingClientRect(),w=330,pad=13;const left=r.right+w+18<innerWidth?r.right+12:Math.max(pad,r.left-w-12);hover.style.left=Math.min(innerWidth-w-pad,Math.max(pad,left))+'px';const h=hover.offsetHeight;hover.style.top=Math.max(pad,Math.min(innerHeight-h-pad,r.top))+'px';}
 function hideHover(){hover.classList.remove('visible')}
-function modalOpen(c){modalOdds=false;modalCardId=c.id;hideHover();const a=arche(c),owned=saved.some(s=>s.id===c.id),marketItem=market.some(s=>s.id===c.id),price=calcPrice(c);$('modalHeading').textContent=enemy.lineup.some(x=>x.id===c.id)?'ENEMY FRAMED CARD':owned?'SAVED CARD FILE':'MARKET CARD FILE';$('modalContent').innerHTML=`<div class="modal-detail"><div><div class="card-stage">${cardHTML(c)}</div></div><div class="modal-info"><h2 id="modalTitle">${safe(a.name)}</h2><p>${safe(a.effect)}</p>${fullData(c,false).replace(/<div class="h-eyebrow">[\s\S]*?<div class="h-effect">[\s\S]*?<\/div>/,'')}</div></div><div class="modal-actions">${marketItem&&!owned?`<button class="btn primary" data-buy="${safe(c.id)}" ${saved.length>=20||wallet<price?'disabled':''}>${saved.length>=20?'Vault full':wallet<price?'Insufficient test credits':'Save to vault · '+money(price)}</button>`:''}${owned&&!inBattle?`<button class="btn" data-sell="${safe(c.id)}">Sell for ${money(price)} (test)</button>`:''}<button class="btn outline" data-close="true">Close</button></div><div class="small-print">All 10 Common cards have equal 10% pull odds. Card traits are weighted independently, and listings with no notable trait are rerolled.</div>`;modal.classList.add('open');modal.setAttribute('aria-hidden','false');$('modalWindow').scrollTop=0;}
+function modalOpen(c){modalOdds=false;modalCardId=c.id;hideHover();const a=arche(c),owned=saved.some(s=>s.id===c.id),marketItem=market.some(s=>s.id===c.id),price=calcPrice(c);$('modalHeading').textContent=enemy.lineup.some(x=>x.id===c.id)?'ENEMY FRAMED CARD':owned?'SAVED CARD FILE':'MARKET CARD FILE';$('modalContent').innerHTML=`<div class="modal-detail"><div><div class="card-stage">${cardHTML(c)}</div></div><div class="modal-info"><h2 id="modalTitle">${safe(a.name)}</h2><p>${safe(a.effect)}</p>${fullData(c,false).replace(/<div class="h-eyebrow">[\s\S]*?<div class="h-effect">[\s\S]*?<\/div>/,'')}</div></div><div class="modal-actions">${marketItem&&!owned?`<button class="btn primary" data-buy="${safe(c.id)}" ${saved.length>=20||wallet<price?'disabled':''}>${saved.length>=20?'Vault full':wallet<price?'Insufficient test credits':'Save to vault · '+money(price)}</button>`:''}${owned&&!inBattle?`<button class="btn" data-sell="${safe(c.id)}">Sell for ${money(saleValue(c))}</button>`:''}<button class="btn outline" data-close="true">Close</button></div><div class="small-print">All 10 Common cards have equal 10% pull odds. Card traits are weighted independently, and listings with no notable trait are rerolled.</div>`;modal.classList.add('open');modal.setAttribute('aria-hidden','false');$('modalWindow').scrollTop=0;}
 function purchase(id){const c=market.find(x=>x.id===id);if(!c){showToast('Card not in current market');return;}if(saved.some(x=>x.id===id)){showToast('Already saved');return;}if(saved.length>=20){showToast('Vault is full (20 cards)');return;}const p=calcPrice(c);if(wallet<p){showToast('Not enough test credits');return;}wallet=Math.round((wallet-p)*100)/100;let acquired=JSON.parse(JSON.stringify(c));if(acquired.protection==='framed'&&!Number.isFinite(acquired.frozenPrice))acquired.frozenPrice=calcPrice(c);saved.push(acquired);hideHover();render();if(modal.classList.contains('open'))modalOpen(c);showToast('Saved '+arche(c).name+' to your vault');}
-function sell(id){const i=saved.findIndex(c=>c.id===id);if(i<0)return;const c=saved[i];wallet=Math.round((wallet+calcPrice(c))*100)/100;lineup=lineup.filter(id=>id!==c.id);saved.splice(i,1);modalClose();render();showToast('Sold '+arche(c).name+' for '+money(calcPrice(c)));}
+function sell(id){const i=saved.findIndex(c=>c.id===id);if(i<0)return;const c=saved[i];wallet=Math.round((wallet+saleValue(c))*100)/100;lineup=lineup.filter(id=>id!==c.id);saved.splice(i,1);modalClose();render();showToast('Sold '+arche(c).name+' for '+money(saleValue(c)));}
 function modalClose(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');modalCardId=null;modalOdds=false;}
 function oddsRow(label,val){return `<div class="odds-row"><span>${label}</span><strong>${val}</strong></div>`}
 const PASS=1-(.99*.97*.94*.88*.80)*(.82*.97*.94*.94*.95*.98*.92)*.78;
@@ -310,7 +312,7 @@ function renderPack(){
  if(!packSelection||!cards.some(c=>c.id===packSelection))packSelection=cards[0].id;
  const focused=cards.find(c=>c.id===packSelection);
  $('packList').innerHTML=cards.map((c,i)=>`<div class="pack-entry ${c.id===packSelection?'selected':''}" data-pack-select="${safe(c.id)}" title="Inspect ${safe(arche(c).name)}"><div class="pack-entry-num">#${i+1}</div><div class="card-stage">${cardHTML(c)}</div><div class="pack-entry-price">${money(calcPrice(c))}</div></div>`).join('');
- $('packInspect').innerHTML=`<button class="btn primary" data-pack-keep="${safe(focused.id)}" ${saved.length>=20?'disabled':''}>${saved.length>=20?'Vault full':'Keep this card'}</button>${fullData(focused,true)}<p class="detail-note">One OTHER card from this pack will be randomly sold at its current online market value. The remaining cards are discarded.</p>`;
+ $('packInspect').innerHTML=`<button class="btn primary" data-pack-keep="${safe(focused.id)}" ${saved.length>=20?'disabled':''}>${saved.length>=20?'Vault full':'Keep this card'}</button>${fullData(focused,true)}<p class="detail-note">One OTHER card will be randomly sold for 25% of its online market value. A pack is an investment, not guaranteed profit. The remaining cards are discarded.</p>`;
  $('packProgress').textContent=cards.length+' choices · 1 keep · 1 sold';
 }
 function startPack(id){
@@ -326,10 +328,10 @@ function finishPack(id){
  if(!pendingPack)return;
  if(saved.length>=20){showToast('Vault full · free a slot first');return;}
  const list=pendingPack.cards;const kept=list.find(c=>c.id===id);if(!kept)return;
- const rest=list.filter(c=>c.id!==id),sold=rest[rand(rest.length)];const sale=calcPrice(sold),name=PACKS[pendingPack.id].label;
+ const rest=list.filter(c=>c.id!==id),sold=rest[rand(rest.length)];const sale=saleValue(sold),name=PACKS[pendingPack.id].label;
  const keptCopy=JSON.parse(JSON.stringify(kept));if(keptCopy.protection==='framed'&&!Number.isFinite(keptCopy.frozenPrice))keptCopy.frozenPrice=calcPrice(kept);saved.push(keptCopy);wallet=Math.round((wallet+sale)*100)/100;
  pendingPack=null;packSelection=null;packClose();render();
- $('modalHeading').textContent='PACK RESULTS';$('modalContent').innerHTML=`<div class="pack-result"><h2 id="modalTitle">${safe(name)} complete!</h2><p>✦ <strong>Kept:</strong> ${safe(arche(kept).name)} · PSA ${kept.psa} · ${money(calcPrice(kept))}</p><p>💰 <strong>Randomly sold:</strong> ${safe(arche(sold).name)} · PSA ${sold.psa} · <b>+${money(sale)}</b> to your wallet.</p><p>The other ${list.length-2} cards were discarded.</p><button class="btn primary" data-close="true">Back to market</button></div>`;
+ $('modalHeading').textContent='PACK RESULTS';$('modalContent').innerHTML=`<div class="pack-result"><h2 id="modalTitle">${safe(name)} complete!</h2><p>✦ <strong>Kept:</strong> ${safe(arche(kept).name)} · PSA ${kept.psa} · ${money(calcPrice(kept))}</p><p>💰 <strong>Randomly sold:</strong> ${safe(arche(sold).name)} · PSA ${sold.psa} · <b>+${money(sale)}</b> cash (25% of ${money(calcPrice(sold))} online value).</p><p>The other ${list.length-2} cards were discarded.</p><button class="btn primary" data-close="true">Back to market</button></div>`;
  modal.classList.add('open');modal.setAttribute('aria-hidden','false');showToast('Kept 1 card · Sold 1 for '+money(sale));
 }
 $('packButtons').addEventListener('click',e=>{const b=e.target.closest('[data-pack]');if(b)startPack(b.dataset.pack);});
@@ -485,7 +487,7 @@ function resolveBattle(){
  let reward=0;
  const finishedRound=round;
  refreshCount=0; // A battle was played, so refreshing restarts at its base price.
- if(f.victory){reward=Math.round((12+3*round)*f.diff.mult*100)/100;wallet=Math.round((wallet+reward)*100)/100;round++;refreshCount=0;market=generateMarket();drop++;}
+ if(f.victory){reward=Math.round((4+round)*f.diff.mult*100)/100;wallet=Math.round((wallet+reward)*100)/100;round++;refreshCount=0;market=generateMarket();drop++;}
  inBattle=false;selectedForBattle=null;drawBattle();render();
  const text=f.victory?'VICTORY':'DEFEAT';
  $('modalHeading').textContent='BATTLE RESULTS';
