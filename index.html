@@ -86,13 +86,25 @@ main{height:calc(100dvh - 63px);max-width:1500px;margin:0 auto;padding:12px clam
 @media(max-width:620px){.battle-view{top:54px;padding:6px 6px 9px;gap:5px}.battle-head h2{font-size:22px}.battle-overline{font-size:8px}.battle-actions .btn{font-size:10px;padding:6px 8px}.battle-info{font-size:9px;padding:4px 6px;gap:3px}.battle-info span:last-child{flex-basis:100%;text-align:center}.battle-scroll{border-width:2px;box-shadow:2px 2px 0 var(--ink)}.battle-grid{gap:5px;padding:5px 6px 7px}.battle-lane{flex-basis:88px}.battle-lane .card-face .psa-value{font-size:29px}.battle-lane .card-face .ability-name{font-size:6px}.battle-lane .card-face .ability-sub{display:none}.battle-lane .card-face .card-name-band{padding:2px 1px}.battle-dock{max-height:164px;min-height:124px;padding:4px 5px 7px;border-width:2px}.battle-dock-header small{font-size:8px}.battle-dock-header{font-size:10px}.battle-dock-header>span{font-size:8px}.battle-roster{grid-auto-columns:64px;grid-template-rows:repeat(2,minmax(43px,1fr));gap:4px}.battle-footer{font-size:8px;flex-wrap:wrap;gap:1px}.battle-footer span:last-child{display:none}}
 @media(max-height:590px){.battle-dock{max-height:100px;min-height:90px}.battle-lane .card-face .psa-value{font-size:22px}.battle-overline{display:none}.battle-footer{display:none}}
 
+/* Last Chance is unmistakable without sacrificing the compact shop layout. */
+body.last-chance-active{background-color:#ffe0d3;background-image:radial-gradient(#f1aa95 1.1px,transparent 1.1px)}
+body.last-chance-active header{background:#ff9f6f}
+.head-stat.chrome{background:#e6faff}
+.head-stat.chrome strong{color:#126f99}
+body.last-chance-active #roundBtn{background:#ff747c;color:#321f34;animation:lastPulse 1.5s ease-in-out infinite}
+body.last-chance-active #roundLabel{background:#ff747c;color:#321f34;border-color:#321f34}
+.battle-view.last-chance-active{background:#ffe1d4}
+.battle-view.last-chance-active .battle-head{background:#ff9979}
+.battle-view.last-chance-active #battleFight{background:#ff767b}
+@keyframes lastPulse{50%{box-shadow:0 0 0 4px #ffce92,3px 4px 0 var(--ink)}}
+@media(max-width:620px){.head-stat.chrome{min-width:58px;padding:4px 5px}.head-stat.chrome label{font-size:7px}.head-stat.chrome strong{font-size:11px}}
 </style>
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
 <header>
   <div class="brand"><div class="brandmark" aria-hidden="true"></div><div><div class="brandname">FRAMED<span> OR </span>ELSE</div><div class="brand-sub">The card market</div></div></div>
-  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Test wallet</label><strong id="wallet">£150</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div></div>
+  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Test wallet</label><strong id="wallet">£150</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div><div class="head-stat chrome" title="Earn one ChromeCoin per round you win. ChromeCoins survive game over."><label>ChromeCoins</label><strong id="chromeCoins">◈ 0</strong></div></div>
 </header>
 <main>
   <div class="intro"><div><div class="eyebrow">Collection starts here</div><h1>THE<br>MARKET<span style="color:var(--mint)">.</span></h1><p class="subtitle">Five randomly generated Common cards. Every listing has at least one notable factor. Inspect the details, acquire favourites and protect up to 20 cards in your vault.</p></div><div class="actions"><button id="oddsBtn" class="btn outline">◫ &nbsp; Pull odds</button><button id="roundBtn" class="btn outline" title="Enter the next card battle">⚔ Round</button><button id="refreshBtn" class="btn primary">↻ Refresh · £4</button></div></div>
@@ -225,10 +237,12 @@ function condLabels(c){const a=[c.quality==='perfect'?'Perfect Condition':c.qual
 function protectedName(c){return PROTECT.find(x=>x.id===c.protection)?.name||'No Foil'}
 let market=generateMarket(),saved=[],wallet=75,drop=1,round=1,refreshCount=0,pendingPack=null,packSelection=null;
 let enemy={lineup:[],pocket:[],log:[]}, lineup=[],inBattle=false,selectedForBattle=null;
+let lastChance=false,chromeCoins=0,runChromeEarned=0;
 try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&Array.isArray(old.saved)&&Array.isArray(old.market)&&Number.isFinite(old.wallet)){saved=old.saved.slice(0,20);market=old.market.length===5?old.market:market;wallet=old.wallet;drop=old.drop||1;round=Number.isFinite(old.round)&&old.round>=1?old.round:1;refreshCount=Number.isFinite(old.refreshCount)&&old.refreshCount>=0?old.refreshCount:0;pendingPack=old.pendingPack&&PACKS[old.pendingPack.id]&&Array.isArray(old.pendingPack.cards)&&old.pendingPack.cards.length===PACKS[old.pendingPack.id].count?old.pendingPack:null;
  enemy=old.enemy&&Array.isArray(old.enemy.lineup)&&Array.isArray(old.enemy.pocket)?old.enemy:enemy;
- lineup=Array.isArray(old.lineup)?old.lineup.filter(id=>saved.some(x=>x.id===id)):[];inBattle=!!old.inBattle;}}catch(e){}
-function persist(){try{localStorage.setItem(KEY,JSON.stringify({market,saved,wallet,drop,round,refreshCount,pendingPack,enemy,lineup,inBattle}));}catch(e){}}
+ lineup=Array.isArray(old.lineup)?old.lineup.filter(id=>saved.some(x=>x.id===id)):[];inBattle=!!old.inBattle;
+ lastChance=!!old.lastChance;chromeCoins=Number.isSafeInteger(old.chromeCoins)&&old.chromeCoins>=0?old.chromeCoins:0;runChromeEarned=Number.isSafeInteger(old.runChromeEarned)&&old.runChromeEarned>=0?old.runChromeEarned:0;}}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({market,saved,wallet,drop,round,refreshCount,pendingPack,enemy,lineup,inBattle,lastChance,chromeCoins,runChromeEarned}));}catch(e){}}
 function refreshPrice(){return REFRESH_BASE+refreshCount*REFRESH_STEP;}
 const $=id=>document.getElementById(id),grid=$('marketGrid'),hover=$('hovercard'),modal=$('modal');
 let toastTimer=null,hoverTimer=null,modalCardId=null,modalOdds=false;
@@ -254,7 +268,7 @@ function fullData(c,compact=false){const a=arche(c),element=el(c),price=money(ca
  return `<div class="h-eyebrow">COMMON · ${safe(a.kind)}</div><div class="h-title">${safe(a.name)}</div><div class="h-effect">${safe(a.effect)}</div>${mid}${basic}${compact?'':details}`;
 }
 function render(){grid.innerHTML=market.map((c,i)=>{const owned=saved.some(s=>s.id===c.id),price=calcPrice(c),a=arche(c);return `<article class="listing ${owned?'acquired':''}"><div class="card-stage">${cardHTML(c)}</div><div class="listing-footer"><div><div class="price-label">Online value</div><div class="price-value">${money(price)}</div></div><button class="btn tiny" data-buy="${safe(c.id)}" ${owned||saved.length>=20||wallet<price?'disabled':''}>${owned?'Saved ✓':saved.length>=20?'Vault full':wallet<price?'Too costly':'＋ Save'}</button></div><div class="card-quick">${c.types.map(t=>TYPE_RULES.find(x=>x.id===t)?.name).join(' · ')}</div><div class="quick-badges"><span>${el(c).icon} ${el(c).name}</span>${c.protection!=='none'?`<span>${safe(protectedName(c))}</span>`:''}${c.quality!=='normal'?`<span>${c.quality==='near'?'Near Mint':'Perfect'}</span>`:''}</div></article>`;}).join('');
- $('wallet').textContent=money(wallet);$('savedCountTop').textContent=saved.length+' / 20';$('vaultCount').textContent=saved.length;$('slotsFill').style.width=(saved.length/20*100)+'%';$('refreshNo').textContent='Drop #'+drop;$('roundLabel').textContent='Round '+round;$('refreshBtn').textContent='↻ Refresh · '+money(refreshPrice());$('refreshBtn').disabled=wallet<refreshPrice()||!!pendingPack;$('roundBtn').disabled=!!pendingPack;document.querySelectorAll('[data-pack]').forEach(b=>{const p=PACKS[b.dataset.pack];b.disabled=!!pendingPack?false:saved.length>=20||wallet<p.price;b.classList.toggle('pending',!!pendingPack);b.title=pendingPack?'Resume your unopened pack before purchasing another.':(b.title||'');});
+ $('wallet').textContent=money(wallet);$('chromeCoins').textContent='◈ '+chromeCoins;document.body.classList.toggle('last-chance-active',lastChance);$('roundBtn').textContent=lastChance?'⚠ LAST CHANCE':'⚔ Round';$('savedCountTop').textContent=saved.length+' / 20';$('vaultCount').textContent=saved.length;$('slotsFill').style.width=(saved.length/20*100)+'%';$('refreshNo').textContent='Drop #'+drop;$('roundLabel').textContent=lastChance?'⚠ LAST CHANCE · Round '+round:'Round '+round;$('refreshBtn').textContent='↻ Refresh · '+money(refreshPrice());$('refreshBtn').disabled=wallet<refreshPrice()||!!pendingPack;$('roundBtn').disabled=!!pendingPack;document.querySelectorAll('[data-pack]').forEach(b=>{const p=PACKS[b.dataset.pack];b.disabled=!!pendingPack?false:saved.length>=20||wallet<p.price;b.classList.toggle('pending',!!pendingPack);b.title=pendingPack?'Resume your unopened pack before purchasing another.':(b.title||'');});
  $('vaultList').innerHTML=saved.map(c=>`<button class="vault-item" data-inspect="${safe(c.id)}" title="${safe(arche(c).name)} · PSA ${c.psa}" aria-label="Inspect saved ${safe(arche(c).name)}"><div class="em">${el(c).icon}</div><strong>${c.psa}</strong><small>${safe(arche(c).name)}</small></button>`).join('')+Array.from({length:20-saved.length},()=>'<div class="vault-empty-slot" aria-hidden="true"></div>').join('');
  persist();
 }
@@ -437,15 +451,17 @@ function combatForecast(){
  return {wins,losses,ties,rows,ratio,diff,victory:wins>losses};
 }
 function drawBattle(){
- const view=$('battleView');view.classList.toggle('active',inBattle);view.setAttribute('aria-hidden',inBattle?'false':'true');
+ const view=$('battleView');view.classList.toggle('active',inBattle);view.classList.toggle('last-chance-active',lastChance);view.setAttribute('aria-hidden',inBattle?'false':'true');
  if(!inBattle)return;
- $('battleTitle').textContent='ROUND '+round;
+ $('battleTitle').textContent=lastChance?'LAST CHANCE · ROUND '+round:'ROUND '+round;
+ $('battleFight').textContent=lastChance?'⚠ FINAL FIGHT':'⚔ Fight!';
+ document.querySelector('.battle-overline').textContent=lastChance?'FINAL ATTEMPT · LOSE AND THE RUN ENDS':'FRAMED ENEMY · IMMUTABLE COLLECTION';
  $('battleEnemyCount').textContent='ENEMY · '+enemy.lineup.length+' FRAMED';
  $('battleCapacity').textContent='YOUR LINEUP · '+usedCapacity()+' / 10 SPACE';
  $('battlePocketInfo').textContent='Pocket: '+enemy.pocket.length+' cards · '+(round%3===0?'Vintage HIGH':round%3===2?'Median':'Median / 20% low');
  const cs=chosenCards(),f=cs.length?combatForecast():null;
  $('battleForecast').textContent=f?`Forecast: ${f.wins}–${f.losses} (${f.ties} ties) · ${f.victory?f.diff.text:'DEFEAT'}`:'Pick cards from storage ↓';
- $('battleFight').disabled=!cs.length;
+ $('battleFight').disabled=!cs.length&&!lastChance;
  const total=Math.max(10,enemy.lineup.length,cs.length+1);
  $('battleGrid').innerHTML=Array.from({length:total},(_,i)=>{
   const e=enemy.lineup[i],c=cs[i];
@@ -454,13 +470,13 @@ function drawBattle(){
   ${c?`${cardHTML(c)}<button class="tile-remove" data-remove="${safe(c.id)}" aria-label="Remove ${safe(arche(c).name)}">×</button><span class="tile-arrows"><button data-left="${safe(c.id)}" title="Move left">◀</button><button data-right="${safe(c.id)}" title="Move right">▶</button></span>`:`<button class="battle-add" data-slot="${i}">${selectedForBattle?'＋ PLACE':'＋'}</button>`}</div></div>`;
  }).join('');
  $('battleRoster').innerHTML=saved.length?saved.map(c=>`<button class="roster-entry ${lineup.includes(c.id)?'used':''} ${selectedForBattle===c.id?'chosen':''}" draggable="true" data-roster="${safe(c.id)}" title="${safe(arche(c).name)} · ${money(calcPrice(c))}"><span class="roster-element">${el(c).icon}</span><span class="roster-psa">${c.psa}</span><span class="roster-name">${safe(arche(c).name)}</span><span class="roster-cap">${cap(c)} slot</span></button>`).join(''):'<div class="empty-battle">No saved cards yet! Go back and buy or open a pack.</div>';
- $('battlePickInfo').textContent=selectedForBattle?'Choose a position above':'Tap a card to add · drag to reorder';
+ $('battlePickInfo').textContent=selectedForBattle?'Choose a position above':lastChance?'FINAL FIGHT · NO MORE RETRIES':'Tap a card to add · drag to reorder';
  persist();
 }
 function enterBattle(){
  if(pendingPack){showToast('Finish your pack first');return;}
  if(modal.classList.contains('open'))modalClose();if(packModal.classList.contains('open'))packClose();
- ensureEnemy();inBattle=true;hideHover();drawBattle();showToast('Round '+round+' · Enemy gained one framed card');
+ ensureEnemy();inBattle=true;hideHover();drawBattle();showToast(lastChance?'LAST CHANCE · Win this fight or lose your run!':'Round '+round+' · Enemy gained one framed card');
 }
 function backToShop(){inBattle=false;selectedForBattle=null;drawBattle();render();}
 function ageFightingCard(c){
@@ -478,22 +494,52 @@ function ageFightingCard(c){
  c.psa=Math.max(1,c.psa-(c.conditions.burnt?(c.conditions.misprinted?4:2):1));
  return false;
 }
+function resetRun(){
+ // ChromeCoins are the only permanent currency; everything else starts from zero progress.
+ saved=[];market=generateMarket();wallet=75;drop=1;round=1;refreshCount=0;
+ pendingPack=null;packSelection=null;enemy={lineup:[],pocket:[],log:[]};lineup=[];
+ inBattle=false;selectedForBattle=null;lastChance=false;runChromeEarned=0;
+ packClose();
+}
 function resolveBattle(){
- if(!inBattle||!lineup.length)return;
+ if(!inBattle||(!lineup.length&&!lastChance))return;
  const f=combatForecast(),playedCards=chosenCards();
  const erased=[];
  for(const c of playedCards)if(ageFightingCard(c))erased.push(c);
  if(erased.length){saved=saved.filter(c=>!erased.includes(c));lineup=lineup.filter(id=>saved.some(c=>c.id===id));}
- let reward=0;
- const finishedRound=round;
- refreshCount=0; // A battle was played, so refreshing restarts at its base price.
- if(f.victory){reward=Math.round((4+round)*f.diff.mult*100)/100;wallet=Math.round((wallet+reward)*100)/100;round++;refreshCount=0;market=generateMarket();drop++;}
+ const finishedRound=round,wasLastChance=lastChance;
+ let title='',summary='',nextLabel='Continue',reward=0,heading='BATTLE RESULTS';
+ refreshCount=0;
+ if(f.victory){
+  reward=Math.round((4+round)*f.diff.mult*100)/100;
+  wallet=Math.round((wallet+reward)*100)/100;
+  round++;chromeCoins++;runChromeEarned++;lastChance=false;
+  market=generateMarket();drop++;
+  title=wasLastChance?'LAST CHANCE SURVIVED!':'VICTORY';
+  summary=`${wasLastChance?'<p><b>Comeback!</b> You survived your final chance and can continue normally. Any cards sold after your earlier defeat remain sold.</p>':''}<p><b>${f.diff.text}</b> · ×${f.diff.mult} rewards · <b>+${money(reward)}</b> awarded.</p><p><b>+1 ChromeCoin</b> · ${chromeCoins} total (ChromeCoins survive a game over).</p>`;
+  nextLabel='Continue to shop';
+ } else if(!wasLastChance){
+  // The entire collection is liquidated except for permanently framed cards.
+  const liquidated=saved.filter(c=>c.protection!=='framed');
+  const proceeds=Math.round(liquidated.reduce((total,c)=>total+saleValue(c),0)*100)/100;
+  wallet=Math.round((wallet+proceeds)*100)/100;
+  saved=saved.filter(c=>c.protection==='framed');
+  lineup=lineup.filter(id=>saved.some(c=>c.id===id));
+  lastChance=true;
+  title='LAST CHANCE!';heading='DEFEAT · FINAL ATTEMPT';
+  summary=`<p>You lost Round ${finishedRound}. <b>${liquidated.length} unframed card${liquidated.length===1?'':'s'}</b> automatically sold for <b>${money(proceeds)}</b> total at the usual 25% cash-out rate.</p><p><b>${saved.length} framed card${saved.length===1?' remains':'s remain'}.</b> Return to the shop, rebuild with the money you have, then fight <b>this same enemy formation</b> one last time.</p><p><b>Win:</b> recover and continue. <b>Lose:</b> game over, resetting your cards, money and progress. Your ChromeCoins survive.</p>`;
+  nextLabel='Prepare Last Chance';
+ } else {
+  const completed=finishedRound-1,coinsEarned=runChromeEarned,totalCoins=chromeCoins;
+  resetRun();
+  title='GAME OVER';heading='RUN ENDED';
+  summary=`<p>Last Chance failed at Round ${finishedRound}. The run is over.</p><p><b>Rounds passed: ${completed}</b> · <b>${coinsEarned} ChromeCoin${coinsEarned===1?'':'s'} earned this run</b>.</p><p><b>◈ ${totalCoins} ChromeCoins</b> remain permanently saved. Your old money, cards, frames, enemy and round progress have been reset. A new run starts with £75.</p>`;
+  nextLabel='Start New Run';
+ }
  inBattle=false;selectedForBattle=null;drawBattle();render();
- const text=f.victory?'VICTORY':'DEFEAT';
- $('modalHeading').textContent='BATTLE RESULTS';
- $('modalContent').innerHTML=`<div class="battle-result"><h2 id="modalTitle">${text} · Round ${finishedRound}</h2><div class="battle-result-scores"><div><b>${f.wins}</b><span>Your points</span></div><div><b>${f.losses}</b><span>Enemy points</span></div><div><b>${f.ties}</b><span>Ties</span></div></div><p>${f.victory?`<b>${f.diff.text}</b> · ×${f.diff.mult} rewards · <b>+${money(reward)}</b> paid to your wallet.`:'You were outscored. The enemy formation stays the same; you can reorganise and retry.'}</p><p>${playedCards.length} played cards gained a Played round; unprotected grades deteriorated.${erased.length?' '+erased.length+' Anti-Matter card(s) disintegrated.':''} Unplayed vault cards were unaffected.</p><button class="btn primary" data-close="true">${f.victory?'Continue to shop':'Adjust lineup'}</button></div>`;
+ $('modalHeading').textContent=heading;
+ $('modalContent').innerHTML=`<div class="battle-result"><h2 id="modalTitle">${title} · Round ${finishedRound}</h2><div class="battle-result-scores"><div><b>${f.wins}</b><span>Your points</span></div><div><b>${f.losses}</b><span>Enemy points</span></div><div><b>${f.ties}</b><span>Ties</span></div></div>${summary}<p>${playedCards.length} played cards added a Played round.${erased.length?' '+erased.length+' Anti-Matter card(s) disintegrated.':''}</p><button class="btn primary" data-close="true">${nextLabel}</button></div>`;
  modal.classList.add('open');modal.setAttribute('aria-hidden','false');
- if(!f.victory){inBattle=true;drawBattle();}
  persist();
 }
 $('battleBack').addEventListener('click',backToShop);
