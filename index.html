@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Framed Or Else — The Market</title>
+<title>Framed Or Else — Card Battles</title>
 <style>
 
 :root{--bg:#ffeec7;--paper:#fff9e7;--ink:#28233e;--muted:#665b75;--line:#28233e;--mint:#26d5a5;--purple:#a466ed;--gold:#f7b900;--blue:#4e79eb;--radius:13px}
@@ -66,30 +66,61 @@ main{height:calc(100dvh - 63px);max-width:1500px;margin:0 auto;padding:12px clam
  .pack-backdrop{padding:3px}.pack-window{height:98dvh;max-height:98dvh;border-width:2px}.pack-top{padding:7px 9px;border-bottom-width:2px}.pack-top h2{font-size:18px}.pack-top p{font-size:10px}.pack-eyebrow{font-size:8px}.pack-workspace{display:flex;flex-direction:column;gap:6px;padding:5px}.pack-card-list{grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:113px;gap:4px;padding:4px 4px 8px;flex:1 1 auto;min-height:120px}.pack-entry{border-width:1px;border-radius:5px;padding:2px;box-shadow:1px 1px 0 var(--ink)}.pack-entry .card-face{border-width:1px}.pack-entry .card-face .psa-value{font-size:21px}.pack-entry .card-face .psa-label{font-size:6px}.pack-entry .card-face .card-rank{font-size:5px}.pack-entry .card-face .element-chip{font-size:0;padding:1px 2px}.pack-entry .card-face .element-chip span{font-size:9px}.pack-entry .card-face .ability-name{font-size:6px}.pack-entry .card-face .ability-sub{display:none}.pack-entry .card-face .card-name-band{padding:1px}.pack-entry .card-face .played-tag{font-size:5px}.pack-entry .card-face .serial-no{font-size:5px}.pack-entry-price{font-size:9px}.pack-entry-num{font-size:7px}
  .pack-inspect{height:32dvh;max-height:32dvh;flex:none;padding:8px;overflow:auto;border-width:1px}.pack-inspect .h-title{font-size:15px}.pack-inspect .h-effect{font-size:10px;margin:0 0 4px}.pack-inspect .detail-cell{padding:4px}.pack-inspect .detail-cell label{font-size:8px}.pack-inspect .detail-cell b{font-size:10px}.pack-inspect .h-group{margin-top:5px}.pack-inspect .tag{font-size:9px}.pack-inspect .btn{position:sticky;top:0;z-index:2;display:block;margin:0 0 5px;padding:6px;font-size:11px}.pack-bottom{padding:4px 7px}.pack-bottom .btn{font-size:9px;padding:5px}.pack-bottom span{font-size:9px}
 }
+
+/* Compact, colourful tabletop round screen. The enemy and player rows share one horizontal scroller. */
+.battle-view{display:none;position:fixed;top:63px;bottom:0;left:0;right:0;z-index:10;background:#ffe9b4;background-image:radial-gradient(#f4ca8c 1px,transparent 1px);background-size:22px 22px;padding:11px clamp(8px,2vw,26px);gap:8px;flex-direction:column;min-height:0;color:var(--ink)}
+.battle-view.active{display:flex}
+.battle-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex:none}.battle-overline{font-size:10px;font-weight:1000;letter-spacing:.1em;color:#b24b63}.battle-head h2{font-size:clamp(24px,3vw,36px);margin:1px 0;letter-spacing:-.05em;line-height:1}.battle-actions{display:flex;gap:8px}.battle-actions .btn{padding:8px 13px}
+.battle-info{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:5px;font-size:12px;font-weight:1000;background:#fff9e8;border:2px solid var(--ink);border-radius:8px;padding:5px 10px}.battle-info span:first-child{color:#c74e68}.battle-info span:nth-child(2){color:#317cb3}
+.battle-scroll{flex:1;min-height:190px;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;background:#fffcf3;border:3px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink)}
+.battle-grid{display:flex;gap:8px;width:max-content;min-width:100%;height:100%;align-items:stretch;padding:6px 10px 10px}
+.battle-lane{flex:0 0 108px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:0;border-radius:8px;padding:2px}.battle-lane.drag-over{background:#b6f8bc;outline:2px dashed #188b67}.battle-lane-num{font-size:9px;font-weight:1000;color:#8a6c74;line-height:11px}
+.enemy-tile,.player-tile{min-height:0;flex:1 1 0;width:100%;display:flex;align-items:center;justify-content:center;position:relative}.enemy-tile.empty{background:repeating-linear-gradient(45deg,#f4dedb,#f4dedb 6px,#fff3e9 6px,#fff3e9 12px);border:1px dashed #e5a3a3;border-radius:8px}.battle-placeholder{font-size:32px;color:#c8aeb3;font-weight:900}
+.battle-lane .card-face{height:100%;max-height:100%;width:auto;max-width:100%;border-width:2px}.battle-lane .card-face.framed{border-width:6px}.battle-lane .card-face .psa-value{font-size:clamp(22px,3vw,40px)}.battle-lane .card-face .psa-label{font-size:7px}.battle-lane .card-face .ability-name{font-size:8px}.battle-lane .card-face .ability-sub{font-size:6px}.battle-lane .card-face .element-chip{font-size:0;padding:1px 2px}.battle-lane .card-face .element-chip span{font-size:9px}.battle-lane .card-face .card-rank{font-size:6px}.battle-lane .card-face .played-tag{font-size:6px}.battle-lane .card-face .serial-no{font-size:7px}.battle-lane .card-face .card-name-band{padding:2px 2px;bottom:3%;border-width:1px;box-shadow:1px 1px 0 #28233e}.battle-lane .card-face.crimped{height:75%}
+.versus{flex:none;font-weight:1000;color:#a89aa8;font-size:10px;line-height:14px}
+.player-tile{background:#ecfff5;border:2px dashed #75caa5;border-radius:8px}.player-tile.filled{background:transparent;border:0}.battle-add{width:85%;height:85%;border:0;background:transparent;color:#54b48b;font-size:29px;font-weight:1000}.battle-lane .player-tile.drop-target{background:#d8ffde}
+.tile-remove{position:absolute;right:1px;top:1px;z-index:12;background:#f76f91;color:#201a29;border:1px solid #201a29;border-radius:50%;font-size:15px;font-weight:1000;width:21px;height:21px;line-height:17px}.tile-arrows{position:absolute;z-index:10;bottom:1px;display:flex;gap:20px;left:50%;transform:translateX(-50%)}.tile-arrows button{padding:2px 4px;font-size:11px;background:#ffdd72;border:1px solid var(--ink);border-radius:4px;line-height:1}
+.battle-dock{flex:none;max-height:156px;min-height:110px;background:#ffcae1;border:3px solid var(--ink);border-radius:12px;box-shadow:3px 4px 0 var(--ink);padding:5px 9px 8px;display:flex;flex-direction:column}.battle-dock-header{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:12px;flex:none}.battle-dock-header small{color:#67526b;font-size:10px}.battle-dock-header>span{font-size:10px;font-weight:900;color:#66506a}
+.battle-roster{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,minmax(48px,1fr));grid-auto-columns:minmax(62px,76px);gap:5px;flex:1;min-height:0;overflow-x:auto;overflow-y:hidden;padding:5px 2px}.roster-entry{position:relative;border:2px solid var(--ink);border-radius:6px;background:#fff;padding:3px;display:grid;grid-template-columns:21px 1fr;grid-template-rows:auto auto;align-content:center;gap:1px 4px;text-align:left;min-width:0;box-shadow:1px 1px 0 var(--ink)}.roster-entry.used{background:#c9d3ec;opacity:.75}.roster-entry.chosen{background:#aaffbe;outline:3px solid #39a35e;opacity:1}.roster-element{font-size:14px;align-self:center}.roster-psa{font-size:19px;font-weight:1000;line-height:1}.roster-name{grid-column:1/3;min-width:0;font-size:8px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.roster-cap{position:absolute;top:2px;right:2px;color:#a46b78;font-size:7px;font-weight:900}.empty-battle{grid-column:1/-1;padding:16px;font-weight:800;font-size:12px}
+.battle-footer{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:10px;font-weight:900;color:#5d4c67;flex:none}.battle-result h2{font-size:28px;line-height:1;margin:3px 0 14px}.battle-result p{font-size:13px;line-height:1.5}.battle-result-scores{display:flex;gap:7px}.battle-result-scores>div{flex:1;display:flex;flex-direction:column;gap:3px;padding:11px;background:#d6f7f0;border:2px solid var(--ink);border-radius:8px;text-align:center}.battle-result-scores b{font-size:27px}.battle-result-scores span{font-size:10px;font-weight:900}.battle-result .btn{width:100%;margin-top:7px}
+@media(max-width:620px){.battle-view{top:54px;padding:6px 6px 9px;gap:5px}.battle-head h2{font-size:22px}.battle-overline{font-size:8px}.battle-actions .btn{font-size:10px;padding:6px 8px}.battle-info{font-size:9px;padding:4px 6px;gap:3px}.battle-info span:last-child{flex-basis:100%;text-align:center}.battle-scroll{border-width:2px;box-shadow:2px 2px 0 var(--ink)}.battle-grid{gap:5px;padding:5px 6px 7px}.battle-lane{flex-basis:88px}.battle-lane .card-face .psa-value{font-size:29px}.battle-lane .card-face .ability-name{font-size:6px}.battle-lane .card-face .ability-sub{display:none}.battle-lane .card-face .card-name-band{padding:2px 1px}.battle-dock{max-height:164px;min-height:124px;padding:4px 5px 7px;border-width:2px}.battle-dock-header small{font-size:8px}.battle-dock-header{font-size:10px}.battle-dock-header>span{font-size:8px}.battle-roster{grid-auto-columns:64px;grid-template-rows:repeat(2,minmax(43px,1fr));gap:4px}.battle-footer{font-size:8px;flex-wrap:wrap;gap:1px}.battle-footer span:last-child{display:none}}
+@media(max-height:590px){.battle-dock{max-height:100px;min-height:90px}.battle-lane .card-face .psa-value{font-size:22px}.battle-overline{display:none}.battle-footer{display:none}}
+
 </style>
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
 <header>
   <div class="brand"><div class="brandmark" aria-hidden="true"></div><div><div class="brandname">FRAMED<span> OR </span>ELSE</div><div class="brand-sub">The card market</div></div></div>
-  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Test wallet</label><strong id="wallet">£50,000</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div></div>
+  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Test wallet</label><strong id="wallet">£150</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div></div>
 </header>
 <main>
-  <div class="intro"><div><div class="eyebrow">Collection starts here</div><h1>THE<br>MARKET<span style="color:var(--mint)">.</span></h1><p class="subtitle">Five randomly generated Common cards. Every listing has at least one notable factor. Inspect the details, acquire favourites and protect up to 20 cards in your vault.</p></div><div class="actions"><button id="oddsBtn" class="btn outline">◫ &nbsp; Pull odds</button><button id="roundBtn" class="btn outline" title="Temporary round reset until battles are implemented">+ Round</button><button id="refreshBtn" class="btn primary">↻ Refresh · £10</button></div></div>
+  <div class="intro"><div><div class="eyebrow">Collection starts here</div><h1>THE<br>MARKET<span style="color:var(--mint)">.</span></h1><p class="subtitle">Five randomly generated Common cards. Every listing has at least one notable factor. Inspect the details, acquire favourites and protect up to 20 cards in your vault.</p></div><div class="actions"><button id="oddsBtn" class="btn outline">◫ &nbsp; Pull odds</button><button id="roundBtn" class="btn outline" title="Enter the next card battle">⚔ Round</button><button id="refreshBtn" class="btn primary">↻ Refresh · £2</button></div></div>
   <div class="section-head"><div class="section-heading">01 &nbsp; / &nbsp; Today's selection <span class="tiny-dot"></span> <span id="refreshNo">Drop #1</span> <span class="round-label" id="roundLabel">Round 1</span></div><div class="section-note">10 Common effects · 10% each · Refresh cost rises per round</div></div>
   <section aria-label="Five market cards" class="market-grid" id="marketGrid"></section>
   <div class="bottom-bar"><div class="end-note pack-shop" aria-label="Card packs">
   <div class="pack-header"><b>▧ PACKS</b><span>Keep 1 · Sell 1 random</span></div>
   <div class="pack-buttons" id="packButtons">
-    <button class="pack-btn" data-pack="1a" title="Normal 1A — 10 unfiltered cards; keep one, sell one random"> <strong>1A</strong><span>10 cards</span><em>£120</em></button>
-    <button class="pack-btn" data-pack="1b" title="Normal 1B — 20 unfiltered cards; keep one, sell one random"> <strong>1B</strong><span>20 cards</span><em>£240</em></button>
-    <button class="pack-btn" data-pack="1c" title="Normal 1C — 35 unfiltered cards; keep one, sell one random"> <strong>1C</strong><span>35 cards</span><em>£360</em></button>
-    <button class="pack-btn vintage" data-pack="2a" title="Vintage 2A — 10 cards, each guaranteed a special Type and PSA 6+"> <strong>2A</strong><span>Vintage · 10</span><em>£600</em></button>
-    <button class="pack-btn god" data-pack="3a" title="God 3A — 10 cards, each guaranteed a special Type, PSA 8+, Near Mint or Perfect"> <strong>3A</strong><span>God · 10</span><em>£1,800</em></button>
+    <button class="pack-btn" data-pack="1a" title="Normal 1A — 10 unfiltered cards; keep one, sell one random"> <strong>1A</strong><span>10 cards</span><em>£12</em></button>
+    <button class="pack-btn" data-pack="1b" title="Normal 1B — 20 unfiltered cards; keep one, sell one random"> <strong>1B</strong><span>20 cards</span><em>£24</em></button>
+    <button class="pack-btn" data-pack="1c" title="Normal 1C — 35 unfiltered cards; keep one, sell one random"> <strong>1C</strong><span>35 cards</span><em>£36</em></button>
+    <button class="pack-btn vintage" data-pack="2a" title="Vintage 2A — 10 cards, each guaranteed a special Type and PSA 6+"> <strong>2A</strong><span>Vintage · 10</span><em>£65</em></button>
+    <button class="pack-btn god" data-pack="3a" title="God 3A — 10 cards, each guaranteed a special Type, PSA 8+, Near Mint or Perfect"> <strong>3A</strong><span>God · 10</span><em>£100</em></button>
   </div>
 </div>
-<aside class="vault" id="vault"><button class="vault-head" id="vaultToggle" aria-expanded="true" aria-controls="vaultBody"><div class="vault-title"><div class="vault-icon">▣</div><div><small>SAFE STORAGE</small><strong>Saved cards · <span id="vaultCount">0</span>/20</strong></div></div><span class="chevron" id="chevron">⌃</span></button><div class="vault-body" id="vaultBody"><p class="vault-desc">Cards in here don't enter matchups or deteriorate. Your collection is saved in this browser.</p><div class="slots-track"><div class="slots-fill" id="slotsFill"></div></div><div class="vault-list" id="vaultList"></div><div class="vault-note">Select a saved card for its full details or to sell it back at its current displayed value (test mode).</div></div></aside></div>
+<aside class="vault" id="vault"><button class="vault-head" id="vaultToggle" aria-expanded="true" aria-controls="vaultBody"><div class="vault-title"><div class="vault-icon">▣</div><div><small>SAFE STORAGE</small><strong>Saved cards · <span id="vaultCount">0</span>/20</strong></div></div><span class="chevron" id="chevron">⌃</span></button><div class="vault-body" id="vaultBody"><p class="vault-desc">Cards here stay protected until you put them in your battle lineup. Your collection is saved in this browser.</p><div class="slots-track"><div class="slots-fill" id="slotsFill"></div></div><div class="vault-list" id="vaultList"></div><div class="vault-note">Select a saved card for its full details or to sell it back at its current displayed value (test mode).</div></div></aside></div>
 </main>
+<section id="battleView" class="battle-view" aria-label="Card battle" aria-hidden="true">
+ <div class="battle-head"><div><span class="battle-overline">FRAMED ENEMY · IMMUTABLE COLLECTION</span><h2 id="battleTitle">ROUND 1</h2></div>
+  <div class="battle-actions"><button class="btn outline" id="battleBack">← Shop</button><button class="btn primary" id="battleFight">⚔ Fight!</button></div>
+ </div>
+ <div class="battle-info"><span id="battleEnemyCount">Enemy: 1 framed</span><span id="battleCapacity">Your deck: 0 / 10 space</span><span id="battleForecast">Select saved cards to see your forecast</span></div>
+ <div id="battleScroll" class="battle-scroll" aria-label="Ordered card matchups">
+  <div id="battleGrid" class="battle-grid"></div>
+ </div>
+ <div class="battle-dock"><div class="battle-dock-header"><b>▣ SAVED CARDS <small>(tap to select · drag into formation)</small></b><span id="battlePickInfo">Up to 10 space</span></div><div id="battleRoster" class="battle-roster"></div></div>
+ <div class="battle-footer"><span id="battleRule">Five matchups per position · Types, PSA, Condition, Price, Element</span><span id="battlePocketInfo">Enemy pocket</span></div>
+</section>
 <div class="hovercard" id="hovercard" role="tooltip"></div>
 <div class="modal-backdrop" id="modal" aria-hidden="true"><div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalWindow"><div class="modal-top"><div class="h-eyebrow" id="modalHeading">CARD FILE</div><button class="modal-close" id="modalClose" aria-label="Close details">×</button></div><div id="modalContent"></div></div></div>
 <div class="pack-backdrop" id="packModal" aria-hidden="true"><div class="pack-window" role="dialog" aria-modal="true" aria-labelledby="packHeading">
@@ -103,13 +134,13 @@ main{height:calc(100dvh - 63px);max-width:1500px;margin:0 auto;padding:12px clam
 'use strict';
 const KEY='frame-shift-market-v1'; // Keep the original storage key so existing saved cards are preserved.
 const PACKS={
- '1a':{label:'Normal 1A',count:10,price:120,tier:'normal'},
- '1b':{label:'Normal 1B',count:20,price:240,tier:'normal'},
- '1c':{label:'Normal 1C',count:35,price:360,tier:'normal'},
- '2a':{label:'Vintage 2A',count:10,price:600,tier:'vintage'},
- '3a':{label:'God 3A',count:10,price:1800,tier:'god'}
+ '1a':{label:'Normal 1A',count:10,price:12,tier:'normal'},
+ '1b':{label:'Normal 1B',count:20,price:24,tier:'normal'},
+ '1c':{label:'Normal 1C',count:35,price:36,tier:'normal'},
+ '2a':{label:'Vintage 2A',count:10,price:65,tier:'vintage'},
+ '3a':{label:'God 3A',count:10,price:100,tier:'god'}
 };
-const REFRESH_BASE=10, REFRESH_STEP=10;
+const REFRESH_BASE=2, REFRESH_STEP=2;
 const CARDS=[
  {id:'nine',name:'Nine Lives',effect:'Changes the leftmost digit of this card’s online market value to 9.',short:'Leftmost price digit → 9',kind:'Market'},
  {id:'small',name:'Small Advantage',effect:'+1 to every Top Trumps matchup.',short:'+1 · All matchups',kind:'Matchup'},
@@ -170,7 +201,7 @@ function el(c){return ELEMENTS.find(x=>x.id===c.element)||ELEMENTS[0]}
 function typesOf(c){return TYPE_RULES.filter(t=>c.types.includes(t.id))}
 function numericType(c){return typesOf(c).reduce((s,t)=>s+t.score,0)}
 function psaMult(c){return c.psa*.5}
-function calcPrice(c){let p=12*psaMult(c);
+function calcPrice(c){if(c.protection==='framed'&&Number.isFinite(c.frozenPrice))return c.frozenPrice;let p=12*psaMult(c);
  for(const t of typesOf(c))p*=t.mult;
  if(c.quality==='near')p*=1.5;
  if(c.quality==='perfect')p*=2;
@@ -190,9 +221,12 @@ function condLabels(c){const a=[c.quality==='perfect'?'Perfect Condition':c.qual
  if(c.conditions.misprinted)a.push('Misprinted');if(c.conditions.ink)a.push('Ink Error ×'+c.inkFactor.toFixed(1));if(c.conditions.ripped)a.push('Ripped');if(c.conditions.crimped)a.push('Crimped');if(c.conditions.burnt)a.push('Burnt');if(c.played>0)a.push('Played '+c.played+' times');return a;
 }
 function protectedName(c){return PROTECT.find(x=>x.id===c.protection)?.name||'No Foil'}
-let market=generateMarket(),saved=[],wallet=50000,drop=1,round=1,refreshCount=0,pendingPack=null,packSelection=null;
-try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&Array.isArray(old.saved)&&Array.isArray(old.market)&&Number.isFinite(old.wallet)){saved=old.saved.slice(0,20);market=old.market.length===5?old.market:market;wallet=old.wallet;drop=old.drop||1;round=Number.isFinite(old.round)&&old.round>=1?old.round:1;refreshCount=Number.isFinite(old.refreshCount)&&old.refreshCount>=0?old.refreshCount:0;pendingPack=old.pendingPack&&PACKS[old.pendingPack.id]&&Array.isArray(old.pendingPack.cards)&&old.pendingPack.cards.length===PACKS[old.pendingPack.id].count?old.pendingPack:null;}}catch(e){}
-function persist(){try{localStorage.setItem(KEY,JSON.stringify({market,saved,wallet,drop,round,refreshCount,pendingPack}));}catch(e){}}
+let market=generateMarket(),saved=[],wallet=150,drop=1,round=1,refreshCount=0,pendingPack=null,packSelection=null;
+let enemy={lineup:[],pocket:[],log:[]}, lineup=[],inBattle=false,selectedForBattle=null;
+try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&Array.isArray(old.saved)&&Array.isArray(old.market)&&Number.isFinite(old.wallet)){saved=old.saved.slice(0,20);market=old.market.length===5?old.market:market;wallet=old.wallet;drop=old.drop||1;round=Number.isFinite(old.round)&&old.round>=1?old.round:1;refreshCount=Number.isFinite(old.refreshCount)&&old.refreshCount>=0?old.refreshCount:0;pendingPack=old.pendingPack&&PACKS[old.pendingPack.id]&&Array.isArray(old.pendingPack.cards)&&old.pendingPack.cards.length===PACKS[old.pendingPack.id].count?old.pendingPack:null;
+ enemy=old.enemy&&Array.isArray(old.enemy.lineup)&&Array.isArray(old.enemy.pocket)?old.enemy:enemy;
+ lineup=Array.isArray(old.lineup)?old.lineup.filter(id=>saved.some(x=>x.id===id)):[];inBattle=!!old.inBattle;}}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({market,saved,wallet,drop,round,refreshCount,pendingPack,enemy,lineup,inBattle}));}catch(e){}}
 function refreshPrice(){return REFRESH_BASE+refreshCount*REFRESH_STEP;}
 const $=id=>document.getElementById(id),grid=$('marketGrid'),hover=$('hovercard'),modal=$('modal');
 let toastTimer=null,hoverTimer=null,modalCardId=null,modalOdds=false;
@@ -214,7 +248,7 @@ function activeConds(c){return condLabels(c).map(s=>{const kind=s.startsWith('Pe
 function fullData(c,compact=false){const a=arche(c),element=el(c),price=money(calcPrice(c)),pname=protectedName(c),burnRate=c.conditions.burnt?(c.conditions.misprinted?4:2):1,priceBonus=c.kind==='nine'?'Leftmost online-price digit becomes 9.':c.kind==='bargain'?'Online price +2% applied.':'No market-price ability.';
  const mid=`<div class="detail-grid"><div class="detail-cell"><label>Online market value</label><b>${price}</b></div><div class="detail-cell"><label>PSA grade / value ×</label><b>${c.psa} / ×${psaMult(c).toFixed(1)}</b></div><div class="detail-cell"><label>Type matchup</label><b>${numericType(c)} points</b></div><div class="detail-cell"><label>Element</label><b>${element.icon} ${element.name}</b></div></div>`;
  const basic=`<div class="h-group"><b>Types · Permanent</b><div class="tags">${activeTypes(c)}</div></div><div class="h-group"><b>Conditions</b><div class="tags">${activeConds(c)}</div></div><div class="h-group"><b>Protection</b><div class="tags"><span class="tag">${safe(pname)}${c.foilRounds?' · '+c.foilRounds+'/3 rounds':''}</span></div></div>`;
- const details=`${c.serial?`<div class="detail-note">Serial number: <strong>#${String(c.serial).padStart(5,'0')}</strong> of 100,000</div>`:''}<div class="detail-note">Element advantage: ${element.name} beats ${element.beats}. ${c.protection==='framed'?'Framed: all card properties and online price are frozen.':c.protection==='antimatter'?'Anti-Matter: gains PSA instead of deteriorating; disintegrates at PSA 10.':c.protection==='none'?`Unprotected: −${burnRate} PSA per future played round (floor 1).`:'Foil: protection lasts 3 played rounds, then automatically detaches.'} Played history increments when used, including under protection.</div><div class="detail-note">${priceBonus} Round combat and market trends aren't implemented yet; vault cards stay protected while the test-round button is used.</div>`;
+ const details=`${c.serial?`<div class="detail-note">Serial number: <strong>#${String(c.serial).padStart(5,'0')}</strong> of 100,000</div>`:''}<div class="detail-note">Element advantage: ${element.name} beats ${element.beats}. ${c.protection==='framed'?'Framed: all card properties and online price are frozen.':c.protection==='antimatter'?'Anti-Matter: gains PSA instead of deteriorating; disintegrates at PSA 10.':c.protection==='none'?`Unprotected: −${burnRate} PSA per future played round (floor 1).`:'Foil: protection lasts 3 played rounds, then automatically detaches.'} Played history increments when used, including under protection.</div><div class="detail-note">${priceBonus} The card loses PSA only when actually played without protection. Cards left in storage do not deteriorate.</div>`;
  return `<div class="h-eyebrow">COMMON · ${safe(a.kind)}</div><div class="h-title">${safe(a.name)}</div><div class="h-effect">${safe(a.effect)}</div>${mid}${basic}${compact?'':details}`;
 }
 function render(){grid.innerHTML=market.map((c,i)=>{const owned=saved.some(s=>s.id===c.id),price=calcPrice(c),a=arche(c);return `<article class="listing ${owned?'acquired':''}"><div class="card-stage">${cardHTML(c)}</div><div class="listing-footer"><div><div class="price-label">Online value</div><div class="price-value">${money(price)}</div></div><button class="btn tiny" data-buy="${safe(c.id)}" ${owned||saved.length>=20||wallet<price?'disabled':''}>${owned?'Saved ✓':saved.length>=20?'Vault full':wallet<price?'Too costly':'＋ Save'}</button></div><div class="card-quick">${c.types.map(t=>TYPE_RULES.find(x=>x.id===t)?.name).join(' · ')}</div><div class="quick-badges"><span>${el(c).icon} ${el(c).name}</span>${c.protection!=='none'?`<span>${safe(protectedName(c))}</span>`:''}${c.quality!=='normal'?`<span>${c.quality==='near'?'Near Mint':'Perfect'}</span>`:''}</div></article>`;}).join('');
@@ -225,9 +259,9 @@ function render(){grid.innerHTML=market.map((c,i)=>{const owned=saved.some(s=>s.
 function findCard(id){return [...market,...saved].find(c=>c.id===id)}
 function tooltipAt(elm,c){if(window.matchMedia('(hover: none), (pointer: coarse)').matches||modal.classList.contains('open'))return;hover.innerHTML=fullData(c,true);hover.classList.add('visible');const r=elm.getBoundingClientRect(),w=330,pad=13;const left=r.right+w+18<innerWidth?r.right+12:Math.max(pad,r.left-w-12);hover.style.left=Math.min(innerWidth-w-pad,Math.max(pad,left))+'px';const h=hover.offsetHeight;hover.style.top=Math.max(pad,Math.min(innerHeight-h-pad,r.top))+'px';}
 function hideHover(){hover.classList.remove('visible')}
-function modalOpen(c){modalOdds=false;modalCardId=c.id;hideHover();const a=arche(c),owned=saved.some(s=>s.id===c.id),marketItem=market.some(s=>s.id===c.id),price=calcPrice(c);$('modalHeading').textContent=owned?'SAVED CARD FILE':'MARKET CARD FILE';$('modalContent').innerHTML=`<div class="modal-detail"><div><div class="card-stage">${cardHTML(c)}</div></div><div class="modal-info"><h2 id="modalTitle">${safe(a.name)}</h2><p>${safe(a.effect)}</p>${fullData(c,false).replace(/<div class="h-eyebrow">[\s\S]*?<div class="h-effect">[\s\S]*?<\/div>/,'')}</div></div><div class="modal-actions">${marketItem&&!owned?`<button class="btn primary" data-buy="${safe(c.id)}" ${saved.length>=20||wallet<price?'disabled':''}>${saved.length>=20?'Vault full':wallet<price?'Insufficient test credits':'Save to vault · '+money(price)}</button>`:''}${owned?`<button class="btn" data-sell="${safe(c.id)}">Sell for ${money(price)} (test)</button>`:''}<button class="btn outline" data-close="true">Close</button></div><div class="small-print">All 10 Common cards have equal 10% pull odds. Card traits are weighted independently, and listings with no notable trait are rerolled.</div>`;modal.classList.add('open');modal.setAttribute('aria-hidden','false');$('modalWindow').scrollTop=0;}
-function purchase(id){const c=market.find(x=>x.id===id);if(!c){showToast('Card not in current market');return;}if(saved.some(x=>x.id===id)){showToast('Already saved');return;}if(saved.length>=20){showToast('Vault is full (20 cards)');return;}const p=calcPrice(c);if(wallet<p){showToast('Not enough test credits');return;}wallet=Math.round((wallet-p)*100)/100;saved.push(JSON.parse(JSON.stringify(c)));hideHover();render();if(modal.classList.contains('open'))modalOpen(c);showToast('Saved '+arche(c).name+' to your vault');}
-function sell(id){const i=saved.findIndex(c=>c.id===id);if(i<0)return;const c=saved[i];wallet=Math.round((wallet+calcPrice(c))*100)/100;saved.splice(i,1);modalClose();render();showToast('Sold '+arche(c).name+' for '+money(calcPrice(c)));}
+function modalOpen(c){modalOdds=false;modalCardId=c.id;hideHover();const a=arche(c),owned=saved.some(s=>s.id===c.id),marketItem=market.some(s=>s.id===c.id),price=calcPrice(c);$('modalHeading').textContent=enemy.lineup.some(x=>x.id===c.id)?'ENEMY FRAMED CARD':owned?'SAVED CARD FILE':'MARKET CARD FILE';$('modalContent').innerHTML=`<div class="modal-detail"><div><div class="card-stage">${cardHTML(c)}</div></div><div class="modal-info"><h2 id="modalTitle">${safe(a.name)}</h2><p>${safe(a.effect)}</p>${fullData(c,false).replace(/<div class="h-eyebrow">[\s\S]*?<div class="h-effect">[\s\S]*?<\/div>/,'')}</div></div><div class="modal-actions">${marketItem&&!owned?`<button class="btn primary" data-buy="${safe(c.id)}" ${saved.length>=20||wallet<price?'disabled':''}>${saved.length>=20?'Vault full':wallet<price?'Insufficient test credits':'Save to vault · '+money(price)}</button>`:''}${owned&&!inBattle?`<button class="btn" data-sell="${safe(c.id)}">Sell for ${money(price)} (test)</button>`:''}<button class="btn outline" data-close="true">Close</button></div><div class="small-print">All 10 Common cards have equal 10% pull odds. Card traits are weighted independently, and listings with no notable trait are rerolled.</div>`;modal.classList.add('open');modal.setAttribute('aria-hidden','false');$('modalWindow').scrollTop=0;}
+function purchase(id){const c=market.find(x=>x.id===id);if(!c){showToast('Card not in current market');return;}if(saved.some(x=>x.id===id)){showToast('Already saved');return;}if(saved.length>=20){showToast('Vault is full (20 cards)');return;}const p=calcPrice(c);if(wallet<p){showToast('Not enough test credits');return;}wallet=Math.round((wallet-p)*100)/100;let acquired=JSON.parse(JSON.stringify(c));if(acquired.protection==='framed'&&!Number.isFinite(acquired.frozenPrice))acquired.frozenPrice=calcPrice(c);saved.push(acquired);hideHover();render();if(modal.classList.contains('open'))modalOpen(c);showToast('Saved '+arche(c).name+' to your vault');}
+function sell(id){const i=saved.findIndex(c=>c.id===id);if(i<0)return;const c=saved[i];wallet=Math.round((wallet+calcPrice(c))*100)/100;lineup=lineup.filter(id=>id!==c.id);saved.splice(i,1);modalClose();render();showToast('Sold '+arche(c).name+' for '+money(calcPrice(c)));}
 function modalClose(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');modalCardId=null;modalOdds=false;}
 function oddsRow(label,val){return `<div class="odds-row"><span>${label}</span><strong>${val}</strong></div>`}
 const PASS=1-(.99*.97*.94*.88*.80)*(.82*.97*.94*.94*.95*.98*.92)*.78;
@@ -257,10 +291,7 @@ $('refreshBtn').addEventListener('click',()=>{
  const price=refreshPrice();if(wallet<price){showToast('Not enough credits for refresh');return;}
  wallet=Math.round((wallet-price)*100)/100;refreshCount++;market=generateMarket();drop++;hideHover();render();showToast('Market refreshed for '+money(price));
 });
-$('roundBtn').addEventListener('click',()=>{
- if(pendingPack){showToast('Finish the pack first');return;}
- round++;refreshCount=0;render();showToast('Test round '+round+' · Refresh price reset');
-});
+$('roundBtn').addEventListener('click',enterBattle);
 $('oddsBtn').addEventListener('click',oddsOpen);
 $('vaultToggle').addEventListener('click',()=>vaultToggle());
 const packModal=$('packModal');
@@ -296,7 +327,7 @@ function finishPack(id){
  if(saved.length>=20){showToast('Vault full · free a slot first');return;}
  const list=pendingPack.cards;const kept=list.find(c=>c.id===id);if(!kept)return;
  const rest=list.filter(c=>c.id!==id),sold=rest[rand(rest.length)];const sale=calcPrice(sold),name=PACKS[pendingPack.id].label;
- saved.push(JSON.parse(JSON.stringify(kept)));wallet=Math.round((wallet+sale)*100)/100;
+ const keptCopy=JSON.parse(JSON.stringify(kept));if(keptCopy.protection==='framed'&&!Number.isFinite(keptCopy.frozenPrice))keptCopy.frozenPrice=calcPrice(kept);saved.push(keptCopy);wallet=Math.round((wallet+sale)*100)/100;
  pendingPack=null;packSelection=null;packClose();render();
  $('modalHeading').textContent='PACK RESULTS';$('modalContent').innerHTML=`<div class="pack-result"><h2 id="modalTitle">${safe(name)} complete!</h2><p>✦ <strong>Kept:</strong> ${safe(arche(kept).name)} · PSA ${kept.psa} · ${money(calcPrice(kept))}</p><p>💰 <strong>Randomly sold:</strong> ${safe(arche(sold).name)} · PSA ${sold.psa} · <b>+${money(sale)}</b> to your wallet.</p><p>The other ${list.length-2} cards were discarded.</p><button class="btn primary" data-close="true">Back to market</button></div>`;
  modal.classList.add('open');modal.setAttribute('aria-hidden','false');showToast('Kept 1 card · Sold 1 for '+money(sale));
@@ -308,9 +339,204 @@ $('packClose').addEventListener('click',packClose);$('packLater').addEventListen
 packModal.addEventListener('click',e=>{if(e.target===packModal)packClose();});
 $('modalClose').addEventListener('click',modalClose);
 modal.addEventListener('click',e=>{if(e.target===modal){modalClose();return;}const b=e.target.closest('[data-buy]');if(b){purchase(b.dataset.buy);return;}const s=e.target.closest('[data-sell]');if(s){sell(s.dataset.sell);return;}if(e.target.closest('[data-close]'))modalClose();});
+
+// ENEMY COLLECTION: one unfiltered 1C draw each round; every third round adds a Vintage 2A top pick.
+// The pocket persists, and the enemy freezes exactly one selected card per round.
+function makeEnemyRound(r){
+ const drawn=Array.from({length:PACKS['1c'].count},()=>rollPackCard('normal')).sort((a,b)=>calcPrice(a)-calcPrice(b));
+ enemy.pocket.push({card:drawn[0],tier:'worst',born:r});
+ enemy.pocket.push({card:drawn[16],tier:'median',born:r},{card:drawn[17],tier:'median',born:r});
+ enemy.pocket.push({card:drawn[34],tier:'high',born:r});
+ if(r%3===0){const vintage=Array.from({length:PACKS['2a'].count},()=>rollPackCard('vintage')).sort((a,b)=>calcPrice(b)-calcPrice(a))[0];enemy.pocket.push({card:vintage,tier:'high',born:r});}
+ let chosenTier=r%3===0?'high':r%3===2?'median':roll(.20)?'worst':'median';
+ let options=enemy.pocket.filter(x=>x.tier===chosenTier);
+ if(!options.length){chosenTier='median';options=enemy.pocket.filter(x=>x.tier==='median');}
+ const pick=options[rand(options.length)],slot=enemy.pocket.indexOf(pick);
+ enemy.pocket.splice(slot,1);
+ const c=pick.card;
+ const fixedPrice=calcPrice(c);
+ c.protection='framed';c.foilRounds=0;c.frozenPrice=fixedPrice;
+ enemy.lineup.push(c);
+ enemy.log.push({round:r,selected:chosenTier,pickedFrom:pick.born,openedVintage:r%3===0,value:fixedPrice});
+}
+function ensureEnemy(){
+ // Sync any older save to its current round without changing completed opponent cards.
+ while(enemy.lineup.length<round && enemy.lineup.length<250){makeEnemyRound(enemy.lineup.length+1);}
+}
+function cap(c){return c.conditions.crimped?.5:1}
+function chosenCards(){return lineup.map(id=>saved.find(c=>c.id===id)).filter(Boolean)}
+function usedCapacity(cards=chosenCards()){return cards.reduce((sum,c)=>sum+cap(c),0)}
+function canInsert(c){return !lineup.includes(c.id)&&usedCapacity()+cap(c)<=10+1e-8}
+function slotAdd(id,pos){
+ const c=saved.find(c=>c.id===id);if(!c)return;
+ const present=lineup.indexOf(id);
+ if(present===-1&&!canInsert(c)){showToast('Your deck is full (10 space)');return;}
+ if(present>=0)lineup.splice(present,1);
+ const target=Number.isFinite(pos)?Math.max(0,Math.min(lineup.length,pos)):lineup.length;
+ lineup.splice(target,0,id);selectedForBattle=null;drawBattle();
+}
+function slotRemove(id){lineup=lineup.filter(x=>x!==id);selectedForBattle=null;drawBattle();}
+function relocate(id,delta){const i=lineup.indexOf(id);if(i<0)return;slotAdd(id,Math.max(0,Math.min(lineup.length-1,i+delta)));}
+function combatStats(c){
+ const t=numericType(c), q=c.quality==='near'?1.5:1,mis=c.conditions.misprinted,ripped=c.conditions.ripped;
+ const a=arche(c).id;
+ const base={type:t,psa:c.psa,condition:1+(c.quality==='near'?1:0)+(c.quality==='perfect'?1:0),price:calcPrice(c),element:1};
+ const stats={};
+ for(const k of ['type','psa','condition','price','element']){
+  let b=base[k];
+  if(a==='small')b+=1;
+  if(a==='eye'&&k==='type')b++;
+  if(a==='appraiser'&&k==='psa')b++;
+  if(a==='minor'&&k==='condition')b++;
+  if(a==='spark'&&k==='element')b++;
+  if(a==='second'&&k===['psa','type','price','condition','element'][Math.abs([...c.id].reduce((n,x)=>n+x.charCodeAt(0),0))%5])b++;
+  if(a==='slight')b*=1.1;
+  if(a==='popular'&&k==='price')b*=1.2;
+  // Price already includes the normal condition modifiers: don't multiply twice.
+  if(k!=='price'){
+   b*=q;
+   if(ripped)b*=mis?.25:.5;
+   else if(mis&&k!=='type')b*=2;
+  }
+  stats[k]=b;
+ }
+ return stats;
+}
+function elementalResult(p,e){
+ const pe=el(p),ee=el(e);if(pe.beats===ee.name)return 1;if(ee.beats===pe.name)return -1;return 0;
+}
+function combatForecast(){
+ const ours=chosenCards(),theirs=enemy.lineup;
+ const total=Math.max(ours.length,theirs.length);
+ let wins=0,losses=0,ties=0;const rows=[];
+ function findSupport(c,opponents,i){
+  if(!opponents.length)return null;
+  return opponents.find(x=>el(c).beats===el(x).name)||opponents[i%opponents.length];
+ }
+ for(let i=0;i<total;i++){
+  let p=ours[i],e=theirs[i],reinforcement='';
+  if(!p&&!e)continue;
+  if(!p&&e&&ours.length){p=findSupport(e,ours,i);reinforcement='enemy support';}
+  if(!e&&p&&theirs.length){e=findSupport(p,theirs,i);reinforcement='your support';}
+  const ps=p?combatStats(p):null,es=e?combatStats(e):null;
+  const cats=[];
+  for(const cat of ['type','psa','condition','price','element']){
+   let result;
+   if(!p)result=-1;else if(!e)result=1;
+   else if(cat==='element'){result=elementalResult(p,e);if(!result){const a=ps.element,b=es.element;result=a>b?1:a<b?-1:0;}}
+   else result=ps[cat]>es[cat]+1e-8?1:ps[cat]+1e-8<es[cat]?-1:0;
+   if(result>0)wins++;else if(result<0)losses++;else ties++;
+   cats.push({category:cat,result});
+  }
+  rows.push({i,p,e,cats,reinforcement});
+ }
+ const ratio=losses===0?(wins?10:1):wins/losses;
+ const diff=ratio>=2.0?{text:'NO DIFF',mult:3}:ratio>=1.5?{text:'LOW DIFF',mult:2.25}:ratio>=1.25?{text:'MED DIFF',mult:1.75}:ratio>=1.1?{text:'HARD DIFF',mult:1.25}:{text:'EXTREME DIFF',mult:1};
+ return {wins,losses,ties,rows,ratio,diff,victory:wins>losses};
+}
+function drawBattle(){
+ const view=$('battleView');view.classList.toggle('active',inBattle);view.setAttribute('aria-hidden',inBattle?'false':'true');
+ if(!inBattle)return;
+ $('battleTitle').textContent='ROUND '+round;
+ $('battleEnemyCount').textContent='ENEMY · '+enemy.lineup.length+' FRAMED';
+ $('battleCapacity').textContent='YOUR LINEUP · '+usedCapacity()+' / 10 SPACE';
+ $('battlePocketInfo').textContent='Pocket: '+enemy.pocket.length+' cards · '+(round%3===0?'Vintage HIGH':round%3===2?'Median':'Median / 20% low');
+ const cs=chosenCards(),f=cs.length?combatForecast():null;
+ $('battleForecast').textContent=f?`Forecast: ${f.wins}–${f.losses} (${f.ties} ties) · ${f.victory?f.diff.text:'DEFEAT'}`:'Pick cards from storage ↓';
+ $('battleFight').disabled=!cs.length;
+ const total=Math.max(10,enemy.lineup.length,cs.length+1);
+ $('battleGrid').innerHTML=Array.from({length:total},(_,i)=>{
+  const e=enemy.lineup[i],c=cs[i];
+  return `<div class="battle-lane"><div class="battle-lane-num">#${i+1}</div><div class="enemy-tile ${e?'':'empty'}">${e?cardHTML(e):'<div class="battle-placeholder">—</div>'}</div><div class="versus">VS</div>
+  <div class="player-tile ${c?'filled':''} ${selectedForBattle?'drop-target':''}" data-slot="${i}" ${c?`draggable="true" data-lineup-drag="${safe(c.id)}"`:''}>
+  ${c?`${cardHTML(c)}<button class="tile-remove" data-remove="${safe(c.id)}" aria-label="Remove ${safe(arche(c).name)}">×</button><span class="tile-arrows"><button data-left="${safe(c.id)}" title="Move left">◀</button><button data-right="${safe(c.id)}" title="Move right">▶</button></span>`:`<button class="battle-add" data-slot="${i}">${selectedForBattle?'＋ PLACE':'＋'}</button>`}</div></div>`;
+ }).join('');
+ $('battleRoster').innerHTML=saved.length?saved.map(c=>`<button class="roster-entry ${lineup.includes(c.id)?'used':''} ${selectedForBattle===c.id?'chosen':''}" draggable="true" data-roster="${safe(c.id)}" title="${safe(arche(c).name)} · ${money(calcPrice(c))}"><span class="roster-element">${el(c).icon}</span><span class="roster-psa">${c.psa}</span><span class="roster-name">${safe(arche(c).name)}</span><span class="roster-cap">${cap(c)} slot</span></button>`).join(''):'<div class="empty-battle">No saved cards yet! Go back and buy or open a pack.</div>';
+ $('battlePickInfo').textContent=selectedForBattle?'Choose a position above':'Tap a card to add · drag to reorder';
+ persist();
+}
+function enterBattle(){
+ if(pendingPack){showToast('Finish your pack first');return;}
+ if(modal.classList.contains('open'))modalClose();if(packModal.classList.contains('open'))packClose();
+ ensureEnemy();inBattle=true;hideHover();drawBattle();showToast('Round '+round+' · Enemy gained one framed card');
+}
+function backToShop(){inBattle=false;selectedForBattle=null;drawBattle();render();}
+function ageFightingCard(c){
+ c.played=(c.played||0)+1;
+ if(c.protection==='framed')return false;
+ if(c.protection==='foil'||c.protection==='artfoil'){
+  c.foilRounds=Math.max(0,(c.foilRounds??3)-1);
+  if(c.foilRounds===0)c.protection='none';
+  return false;
+ }
+ if(c.protection==='antimatter'){
+  c.psa=Math.min(10,c.psa+1);
+  return c.psa>=10;
+ }
+ c.psa=Math.max(1,c.psa-(c.conditions.burnt?(c.conditions.misprinted?4:2):1));
+ return false;
+}
+function resolveBattle(){
+ if(!inBattle||!lineup.length)return;
+ const f=combatForecast(),playedCards=chosenCards();
+ const erased=[];
+ for(const c of playedCards)if(ageFightingCard(c))erased.push(c);
+ if(erased.length){saved=saved.filter(c=>!erased.includes(c));lineup=lineup.filter(id=>saved.some(c=>c.id===id));}
+ let reward=0;
+ const finishedRound=round;
+ refreshCount=0; // A battle was played, so refreshing restarts at its base price.
+ if(f.victory){reward=Math.round((12+3*round)*f.diff.mult*100)/100;wallet=Math.round((wallet+reward)*100)/100;round++;refreshCount=0;market=generateMarket();drop++;}
+ inBattle=false;selectedForBattle=null;drawBattle();render();
+ const text=f.victory?'VICTORY':'DEFEAT';
+ $('modalHeading').textContent='BATTLE RESULTS';
+ $('modalContent').innerHTML=`<div class="battle-result"><h2 id="modalTitle">${text} · Round ${finishedRound}</h2><div class="battle-result-scores"><div><b>${f.wins}</b><span>Your points</span></div><div><b>${f.losses}</b><span>Enemy points</span></div><div><b>${f.ties}</b><span>Ties</span></div></div><p>${f.victory?`<b>${f.diff.text}</b> · ×${f.diff.mult} rewards · <b>+${money(reward)}</b> paid to your wallet.`:'You were outscored. The enemy formation stays the same; you can reorganise and retry.'}</p><p>${playedCards.length} played cards gained a Played round; unprotected grades deteriorated.${erased.length?' '+erased.length+' Anti-Matter card(s) disintegrated.':''} Unplayed vault cards were unaffected.</p><button class="btn primary" data-close="true">${f.victory?'Continue to shop':'Adjust lineup'}</button></div>`;
+ modal.classList.add('open');modal.setAttribute('aria-hidden','false');
+ if(!f.victory){inBattle=true;drawBattle();}
+ persist();
+}
+$('battleBack').addEventListener('click',backToShop);
+$('battleFight').addEventListener('click',resolveBattle);
+$('battleRoster').addEventListener('click',e=>{
+ const item=e.target.closest('[data-roster]');if(!item)return;const id=item.dataset.roster;
+ if(lineup.includes(id)){selectedForBattle=id;showToast('Already deployed · tap its position or × to remove');drawBattle();return;}
+ if(!canInsert(saved.find(c=>c.id===id))){showToast('Your lineup is full');return;}
+ selectedForBattle=id;drawBattle();
+});
+$('battleGrid').addEventListener('click',e=>{
+ const remove=e.target.closest('[data-remove]');if(remove){slotRemove(remove.dataset.remove);return;}
+ const l=e.target.closest('[data-left]');if(l){relocate(l.dataset.left,-1);return;}
+ const r=e.target.closest('[data-right]');if(r){relocate(r.dataset.right,1);return;}
+ const slot=e.target.closest('[data-slot]');if(slot&&selectedForBattle){slotAdd(selectedForBattle,Number(slot.dataset.slot));return;}
+ const inspect=e.target.closest('[data-inspect]');if(inspect){const card=[...enemy.lineup,...saved].find(x=>x.id===inspect.dataset.inspect);if(card)modalOpen(card);}
+});
+// Native drag-and-drop for desktop; tap-select plus arrows for touch screens.
+let draggedId=null;
+for(const area of [$('battleRoster'),$('battleGrid')]){
+ area.addEventListener('dragstart',e=>{const elem=e.target.closest('[data-roster],[data-lineup-drag]');if(!elem)return;draggedId=elem.dataset.roster||elem.dataset.lineupDrag;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',draggedId);});
+ area.addEventListener('dragend',()=>{draggedId=null;document.querySelectorAll('.battle-lane.drag-over').forEach(x=>x.classList.remove('drag-over'));});
+}
+$('battleGrid').addEventListener('dragover',e=>{const slot=e.target.closest('[data-slot]');if(!slot||!draggedId)return;e.preventDefault();e.dataTransfer.dropEffect='move';document.querySelectorAll('.battle-lane.drag-over').forEach(x=>x.classList.remove('drag-over'));slot.closest('.battle-lane')?.classList.add('drag-over');});
+$('battleGrid').addEventListener('drop',e=>{const slot=e.target.closest('[data-slot]');if(!slot||!draggedId)return;e.preventDefault();slotAdd(draggedId,Number(slot.dataset.slot));draggedId=null;});
+// On mobile, support direct finger dragging alongside reliable tap-to-position.
+let touchDrag=null;
+$('battleRoster').addEventListener('pointerdown',e=>{
+ if(e.pointerType==='mouse')return;const el=e.target.closest('[data-roster]');if(el)touchDrag={id:el.dataset.roster,x:e.clientX,y:e.clientY,moved:false};
+},{passive:true});
+$('battleGrid').addEventListener('pointerdown',e=>{
+ if(e.pointerType==='mouse')return;const el=e.target.closest('[data-lineup-drag]');if(el)touchDrag={id:el.dataset.lineupDrag,x:e.clientX,y:e.clientY,moved:false};
+},{passive:true});
+document.addEventListener('pointermove',e=>{if(!touchDrag)return;if(Math.hypot(e.clientX-touchDrag.x,e.clientY-touchDrag.y)>14)touchDrag.moved=true;});
+document.addEventListener('pointerup',e=>{
+ if(!touchDrag)return;const d=touchDrag;touchDrag=null;
+ if(!d.moved)return;
+ const elem=document.elementFromPoint(e.clientX,e.clientY)?.closest('[data-slot]');
+ if(elem){slotAdd(d.id,Number(elem.dataset.slot));}
+});
+
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){packClose();modalClose();hideHover();}});
 window.addEventListener('scroll',hideHover,{passive:true});window.addEventListener('resize',hideHover);
 render();
+if(inBattle){ensureEnemy();drawBattle();}
 if(pendingPack)packOpen();
 })();
 </script>
