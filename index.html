@@ -98,16 +98,65 @@ body.last-chance-active #roundLabel{background:#ff747c;color:#321f34;border-colo
 .battle-view.last-chance-active #battleFight{background:#ff767b}
 @keyframes lastPulse{50%{box-shadow:0 0 0 4px #ffce92,3px 4px 0 var(--ink)}}
 @media(max-width:620px){.head-stat.chrome{min-width:58px;padding:4px 5px}.head-stat.chrome label{font-size:7px}.head-stat.chrome strong{font-size:11px}}
+
+/* Framed OS: restrained surfaces; saturated colour belongs to the cards. */
+:root{--bg:#edf1f6;--paper:#fff;--ink:#253248;--muted:#66758a;--line:#cdd6e2;--mint:#637a91;--purple:#777e91;--gold:#9c8256;--blue:#60758f;--radius:14px}
+html{background:#ecf0f5;color-scheme:light}body{background:#edf1f6;background-image:none;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#253248}
+header{background:#151d29;color:#f3f6fc;border:0;box-shadow:0 1px 0 #313e4f;height:62px;position:relative;z-index:20}
+.brandmark{background:#d7dfe8;border:1px solid #aebdd0;box-shadow:none;transform:rotate(-7deg);border-radius:7px}.brandmark:after{color:#334052;text-shadow:none}
+.brandname{font-size:20px!important;letter-spacing:-.03em}.brandname span{color:#b7c2d1}.brand-sub{color:#98a7ba;font-size:9px;letter-spacing:.08em}
+.head-stat,.head-stat.chrome{background:#222e3e;border:1px solid #37465c;color:#f7f8fc;box-shadow:none;border-radius:10px}.head-stat label,.head-stat.chrome label{color:#a5b4c5}.head-stat.chrome strong{color:#bed8ec}
+.btn,.btn.outline,.btn.primary,.listing .btn.tiny{border:1px solid #cad3e0;background:#fff;color:#2c3d52;box-shadow:0 2px 7px #1b293d12;border-radius:9px;font-weight:750;transition:background .14s,transform .14s,box-shadow .14s}.btn.primary{background:#28394f;border-color:#28394f;color:#fff}.btn:hover:not(:disabled),.btn.primary:hover:not(:disabled),.btn.tiny:hover:not(:disabled){background:#e7edf4;box-shadow:0 3px 11px #1b293d12;transform:translateY(-1px)}.btn.primary:hover:not(:disabled){background:#3c5069;color:#fff}.btn:active:not(:disabled){transform:translateY(0);box-shadow:none}.listing .btn.tiny{background:#28394f;color:#fff;border:1px solid #28394f}.listing .btn.tiny:not(:disabled):hover{background:#3e5066;color:#fff}
+#marketView{display:none}#marketView.active{display:grid}#marketView{background:#f3f6fa;border-radius:0;max-width:none;overflow:hidden;padding-left:clamp(10px,2vw,28px);padding-right:clamp(10px,2vw,28px)}
+#marketView h1{font-size:clamp(25px,2.6vw,35px);text-shadow:none;letter-spacing:-.055em}#marketView h1 span{color:#6b7d93!important}.intro>div:first-child{gap:9px}.nav-back{border:1px solid #cbd4df;color:#4c5f75;background:#fff;padding:8px 12px;border-radius:9px;font-size:12px;font-weight:750;white-space:nowrap}.nav-back:hover{background:#eaf0f5}.section-note,.section-heading{color:#647388}.section-heading{font-weight:750}.round-label{background:#e7edf3;border-color:#d3dee9;color:#516579}.tiny-dot{background:#8a9eb2}
+.listing{background:#fff;border:1px solid #d9e1ea;box-shadow:0 8px 25px #283c5712;border-radius:14px;padding:9px}.listing:hover{box-shadow:0 11px 29px #283c5721}.price-value{font-weight:850}.card-face{border-color:#28233e;box-shadow:inset 0 0 0 3px #ffffff85,2px 3px 0 #28233e55} /* Preserve the original colourful cards. */
+.end-note,.pack-shop{background:#fff;border:1px solid #dce3ec;box-shadow:0 4px 16px #25324812;border-radius:13px}.end-note b,.pack-header b{color:#33445a}.pack-header span{color:#728093;font-weight:650}
+.pack-btn,.pack-btn.vintage,.pack-btn.god{background:#f3f6f9;border:1px solid #d6dfe9;box-shadow:none;color:#36465a;font-weight:750}.pack-btn:hover:not(:disabled){background:#e5ecf4}.pack-btn.vintage{border-bottom:3px solid #9f9aa6}.pack-btn.god{border-bottom:3px solid #697e97}.pack-btn em{color:#617287}
+.vault{border:1px solid #dce3ec;background:#fff;box-shadow:0 4px 16px #25324812;border-radius:13px}.vault-head{background:#f1f4f8;color:#33445a;border-bottom:1px solid #e2e7ed}.vault-head:hover{background:#e7edf4}.vault-icon{color:#6a7f97;text-shadow:none}.vault-item{background:#eef2f6;border:1px solid #cbd5e2;color:#435469}.vault-item:hover{background:#dde7f1}.vault-empty-slot{background:#fff;border:1px dashed #d3dce7;opacity:1}
+.modal-backdrop{background:#151e2bb0}.modal-window{background:#fff;border:1px solid #d0d9e5;box-shadow:0 20px 70px #131c2b49;border-radius:15px}.modal-close{border:1px solid #cbd5e1;background:#edf1f5;color:#4c5867;box-shadow:none}.modal-close:hover{background:#dce5ec}.detail-cell,.odds-group,.pack-result{background:#f4f6f9;border:1px solid #e2e7ed}.tag{border:1px solid #d3dce6;background:#f1f4f7;color:#425167}.tag.gold,.tag.purple,.tag.cyan,.tag.green,.tag.bad,.tag.good{background:#eef2f6;color:#425167;border-color:#ccd7e3}.toast{background:#26364a;color:#fff;border:1px solid #445970;box-shadow:0 8px 30px #1d2b3d50}
+.pack-backdrop{background:#0f1927bb}.pack-window{background:#fff;border:1px solid #cdd7e3;box-shadow:0 18px 60px #15233b53}.pack-top{background:#f4f7fa;border-bottom:1px solid #dce4ec}.pack-top p{color:#728092}.pack-inspect{background:#f6f8fa;border:1px solid #e2e7ee}.pack-bottom{background:#eef2f6;border-top:1px solid #e1e7ef}.pack-entry{border:1px solid #d9e1e8;box-shadow:0 2px 5px #101f3210;background:#fff}.pack-entry.selected{background:#eef4fa;outline:2px solid #6a7f97}
+.battle-view{background:#eef2f6;background-image:none;color:#26364a}.battle-head{background:transparent}.battle-overline{color:#748498}.battle-info,.battle-scroll,.battle-dock{background:#fff;border:1px solid #dce4ec;box-shadow:0 3px 13px #25324810}.battle-info span:first-child{color:#687b92}.battle-lane.drag-over{background:#e4eef9;outline-color:#758da5}.enemy-tile.empty{background:#f1f3f7;border-color:#cbd5e1}.player-tile{background:#f3f7fa;border:1px dashed #acbac9}.battle-add{color:#8797aa}.versus{color:#8793a3}.battle-dock{background:#fff}.roster-entry{border:1px solid #d5deea;box-shadow:none;background:#f2f5f8;color:#34465b}.roster-entry:hover{background:#e5edf6}.battle-footer{color:#728297}
+body.last-chance-active #roundBtn{background:#eed4d5;border-color:#d5b8bc;color:#8a3940}body.last-chance-active #roundLabel{background:#f4e6e6;border-color:#d9c0c5;color:#8a3940}.battle-view.last-chance-active{background:#f2e8e9}.battle-view.last-chance-active .battle-head{background:transparent}.battle-view.last-chance-active #battleFight{background:#8f4a53;color:#fff}
+/* New home: a small working computer desktop rather than a market-first game. */
+.desktop-view{display:none;height:calc(100dvh - 62px);overflow:auto;background:radial-gradient(ellipse at 70% 15%,#243548 0%,#151e2b 56%,#0f1722 100%);color:#ebf1f8;padding:clamp(12px,2.5vw,32px)}.desktop-view.active{display:flex;align-items:stretch;justify-content:center}.desk-shell{width:min(1360px,100%);min-height:100%;border:1px solid #3f4f63;border-radius:18px;background:#1a2635;box-shadow:0 24px 80px #02060d6b;display:flex;flex-direction:column;overflow:hidden}.desk-bar{height:43px;flex:none;display:flex;align-items:center;justify-content:space-between;background:#202d3e;border-bottom:1px solid #35455b;padding:0 22px;color:#b6c5d7;font-size:11px;font-weight:800;letter-spacing:.11em}.desk-live-dot{width:7px;height:7px;border-radius:50%;background:#93b7a8;display:inline-block;margin-right:6px}.desk-bar-path{color:#6f8094}.desk-body{padding:clamp(19px,4vw,48px);flex:1;min-height:0;display:flex;flex-direction:column;gap:clamp(17px,4vw,37px)}.desk-kicker{font-size:10px;letter-spacing:.15em;font-weight:850;color:#9aa9bb}.desk-hero h1{font-size:clamp(34px,5vw,60px);font-weight:800;letter-spacing:-.055em;line-height:1.08;color:#f8faff;text-shadow:none;margin:9px 0}.desk-hero h1 span{color:#b3c2d4!important}.desk-hero p{font-size:14px;color:#96a7ba;margin:10px 0 0}.desk-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(245px,330px);gap:28px;align-items:stretch;flex:1}.desk-apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,2vw,23px);align-items:stretch;min-height:255px}.desk-app{border:1px solid #3a4a5e;border-radius:17px;background:#263548;color:#edf4fb;padding:22px 12px;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:11px;transition:background .15s,transform .15s,border-color .15s}.desk-app:hover{background:#30445b;border-color:#7086a0;transform:translateY(-4px)}.desk-app:active{transform:translateY(0)}.desk-app-icon{width:92px;height:92px;display:grid;place-items:center;background:#35475b;border:1px solid #506178;border-radius:20px}.desk-app-icon svg{width:62px;height:62px}.desk-app-title{font-weight:850;font-size:21px;letter-spacing:-.03em}.desk-app-desc{font-size:11px;color:#acbcd0;text-align:center}.battle-app{background:#2a3a4d}.battle-icon{background:#405168}.desk-side{display:flex;flex-direction:column;gap:14px;min-width:0}.desk-widget{background:#223143;border:1px solid #3b4c60;border-radius:14px;padding:18px;min-height:0;display:flex;flex-direction:column}.widget-label{font-size:10px;letter-spacing:.12em;color:#9cb0c3;font-weight:850}.desk-widget>strong{font-size:28px;letter-spacing:-.03em;margin-top:8px}.desk-widget>p{font-size:12px;line-height:1.5;color:#b5c3d2}.desk-divider{border-top:1px solid #425469;margin-top:auto}.desk-widget-stats{display:flex;gap:28px;padding-top:10px}.desk-widget-stats div{display:grid;gap:5px}.desk-widget-stats small{color:#94a7bc;font-size:9px;letter-spacing:.09em}.desk-widget-stats b{font-size:17px}.desk-feature{flex:1;min-height:135px}.desk-feature-content{display:flex;align-items:center;gap:17px;margin-top:12px;flex:1}.desk-feature .card-stage{height:130px;flex:0 0 92px}.desk-feature .card-face{max-height:130px}.desk-feature .psa-value{font-size:29px}.desk-feature .psa-label{font-size:7px}.desk-feature .ability-name{font-size:7px}.desk-feature .ability-sub{font-size:6px}.desk-feature .element-chip{font-size:6px;padding:1px}.desk-feature-desc{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#becbd9}.desk-feature-desc strong{color:#f8faff;font-size:14px}.desk-feature-desc em{font-style:normal;color:#9bb0c4}.desk-taskbar{flex:none;background:#182331;border-top:1px solid #334459;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;font-size:9px;color:#9bafc4;font-weight:800;letter-spacing:.08em}
+/* Rob's Site restores cards in a separate application. */
+.rob-view{display:none;height:calc(100dvh - 62px);overflow:auto;background:#ebeff4;padding:20px;color:#2a384c}.rob-view.active{display:flex;align-items:stretch;justify-content:center}.rob-window{width:min(1250px,100%);display:flex;flex-direction:column;min-height:100%;border:1px solid #cfd9e5;border-radius:16px;overflow:hidden;box-shadow:0 10px 38px #26364a18;background:#fff}.rob-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f8fafc;padding:15px 22px;border-bottom:1px solid #e2e8ef}.rob-brand{display:flex;gap:10px;align-items:center}.rob-avatar{width:46px;height:46px;border:1px solid #c4d0de;border-radius:12px;background:#e5eaf0;display:grid;place-items:center}.rob-avatar svg{width:36px;height:36px}.rob-brand>div{display:flex;flex-direction:column;gap:4px}.rob-brand strong{font-size:14px;letter-spacing:.09em}.rob-brand small{font-size:9px;color:#788699;letter-spacing:.09em;font-weight:800}.rob-nav{display:flex;gap:6px}.rob-heading{padding:22px 25px 18px}.rob-heading .desk-kicker{color:#75859a}.rob-heading h2{font-size:clamp(24px,3vw,34px);margin:6px 0 7px;letter-spacing:-.04em}.rob-heading p{font-size:13px;color:#728296;margin:0}.rob-layout{display:grid;grid-template-columns:minmax(210px,320px) minmax(0,1fr);gap:18px;padding:0 25px 20px;flex:1;min-height:0}.rob-library,.rob-workbench{border:1px solid #dce4ec;border-radius:13px;overflow:hidden;min-height:230px;background:#fff}.rob-library{display:flex;flex-direction:column}.rob-panel-title{display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid #dfe6ed;font-size:12px}.rob-panel-title span{color:#8995a6;font-weight:750}.rob-roster{padding:9px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:6px}.rob-item{border:1px solid #dce4ed;background:#f7f9fb;padding:10px 12px;border-radius:10px;text-align:left;display:flex;align-items:center;gap:10px}.rob-item:hover,.rob-item.selected{border-color:#93a4ba;background:#eaf0f6}.rob-item-psa{width:45px;height:45px;border-radius:8px;border:1px solid #c8d4e0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:850;color:#2a3950;background:#fff}.rob-item-text{display:flex;flex-direction:column;gap:4px;min-width:0}.rob-item-text strong{font-size:13px}.rob-item-text small{font-size:11px;color:#74849a}.rob-workbench{background:#f9fafc;padding:18px;overflow:auto}.rob-empty{min-height:240px;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:#7a899b;padding:20px}.rob-empty strong{font-size:18px;color:#415267;margin-bottom:8px}.rob-work-title{font-size:18px;font-weight:850;letter-spacing:-.025em;margin:0 0 4px}.rob-work-sub{font-size:12px;color:#788698}.rob-work-body{display:grid;grid-template-columns:minmax(130px,190px) minmax(0,1fr);gap:22px;align-items:start;margin-top:16px}.rob-card-preview{height:270px;display:flex;justify-content:center;align-items:center}.rob-card-preview .card-face{height:100%;max-width:100%}.rob-card-preview .psa-value{font-size:56px}.rob-quote-list{display:flex;flex-direction:column;gap:8px}.rob-quote{border:1px solid #d8e1ec;border-radius:11px;background:#fff;padding:10px 12px;display:flex;align-items:center;gap:10px;justify-content:space-between}.rob-quote-detail{display:flex;flex-direction:column;gap:3px;min-width:0}.rob-quote-detail strong{font-size:13px}.rob-quote-detail small{font-size:11px;color:#75849a;line-height:1.4}.rob-quote button{background:#293b50;color:#fff;border:0;border-radius:8px;padding:9px 11px;font-size:12px;font-weight:800;white-space:nowrap}.rob-quote button:disabled{background:#e6e9ed;color:#788497}.rob-work-note{font-size:11px;line-height:1.5;color:#78869a;margin-top:11px}.rob-bottom{padding:11px 20px;background:#f4f6f9;border-top:1px solid #e2e8ee;display:flex;justify-content:space-between;font-size:9px;letter-spacing:.07em;font-weight:800;color:#8a98a9}
+/* Balatro-sized mini inspection beside the card, rather than a modal. */
+.card-popover{display:none;position:fixed;z-index:160;width:min(320px,calc(100vw - 18px));max-height:min(72dvh,570px);overflow:auto;padding:13px;background:#fff;border:1px solid #b8c6d6;border-radius:13px;box-shadow:0 15px 45px #15263d48;color:#293a50}.card-popover.open{display:block}.peek-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.peek-top h3{font-size:17px;letter-spacing:-.035em;margin:2px 0 0}.peek-close{border:0;background:#edf1f5;color:#53657b;font-size:17px;border-radius:7px;padding:1px 7px}.peek-eyebrow{color:#8694a6;text-transform:uppercase;font-size:9px;letter-spacing:.12em;font-weight:800}.peek-effect{font-size:12px;line-height:1.4;color:#56677e;background:#f3f6f9;border-radius:9px;padding:9px;margin:9px 0}.peek-stats{display:flex;gap:8px;flex-wrap:wrap;font-size:11px;font-weight:750;margin-bottom:7px}.peek-stats span{background:#edf2f7;color:#425872;border-radius:6px;padding:5px 7px}.peek-traits{display:flex;flex-direction:column;gap:5px}.peek-trait{border:1px solid #e0e7ee;border-radius:8px;padding:7px 8px;display:flex;flex-direction:column;gap:2px;background:#fff}.peek-trait b{font-size:11px;color:#37475c}.peek-trait small{font-size:10px;color:#7c8998;line-height:1.35}.peek-actions{display:flex;gap:6px;margin-top:10px}.peek-actions button{flex:1;background:#2a3c52;color:#fff;border:0;border-radius:8px;padding:9px 8px;font-weight:800;font-size:12px}.peek-actions button:disabled{background:#dce2e9;color:#8794a5}.peek-actions .peek-sell{background:#e9eef4;color:#41536b}
+.hovercard{background:#fff;border:1px solid #b8c6d6;box-shadow:0 10px 28px #14223535;border-radius:11px;padding:12px;width:290px}.hovercard .peek-traits{display:none}
+@media(max-width:900px){.desk-content{grid-template-columns:minmax(0,1fr)}.desk-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.desk-apps{min-height:190px}.desk-app-icon{height:74px;width:74px}.desk-app-icon svg{width:50px;height:50px}.rob-layout{grid-template-columns:minmax(190px,260px) minmax(0,1fr)}}
+@media(max-width:620px){header{height:54px;padding:5px 9px}.brandname{font-size:13px!important}.brand-sub{font-size:7px}.head-stat,.head-stat.chrome{padding:4px 6px;box-shadow:none}.head-stat strong{font-size:10px}.head-stat label{font-size:7px}.desktop-view{height:calc(100dvh - 54px);padding:9px}.desk-shell{border-radius:12px;min-height:100%}.desk-body{padding:21px 15px;gap:16px}.desk-hero h1{font-size:36px}.desk-hero p{font-size:12px}.desk-bar{padding:0 13px}.desk-content{grid-template-columns:1fr;gap:12px}.desk-apps{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:170px}.desk-app{padding:12px 4px;border-radius:12px;gap:8px}.desk-app-icon{width:58px;height:58px;border-radius:13px}.desk-app-icon svg{width:40px;height:40px}.desk-app-title{font-size:13px}.desk-app-desc{font-size:9px}.desk-side{grid-template-columns:1fr;gap:9px}.desk-widget{padding:12px}.desk-feature{display:none}.desk-widget>strong{font-size:22px}.desk-widget>p{font-size:11px}.desk-taskbar{padding:9px;font-size:8px}#marketView{height:calc(100dvh - 54px);padding:6px 8px 8px;grid-template-rows:auto auto minmax(0,1fr) 149px;gap:5px}#marketView h1{font-size:17px}.nav-back{font-size:10px;padding:5px 7px}.intro>div:first-child{gap:4px}.intro .actions .btn{font-size:9px;padding:6px 5px}.listing{border:1px solid #dbe4ed;box-shadow:0 3px 9px #273a581c}.listing .btn.tiny{box-shadow:none}.bottom-bar{height:149px}.pack-shop{border:1px solid #dde4ed;box-shadow:none}.vault{border:1px solid #dde4ed;box-shadow:none}.pack-btn{border:1px solid #d8e1eb}.battle-view{top:54px}.rob-view{height:calc(100dvh - 54px);padding:7px}.rob-window{border-radius:11px;min-height:100%}.rob-topbar{padding:10px}.rob-brand strong{font-size:12px}.rob-brand small{font-size:7px}.rob-avatar{width:34px;height:34px}.rob-avatar svg{width:28px;height:28px}.rob-heading{padding:15px 12px}.rob-heading h2{font-size:23px}.rob-heading p{font-size:11px}.rob-layout{display:flex;flex-direction:column;gap:9px;padding:0 10px 10px}.rob-library{flex:none;min-height:0;max-height:145px}.rob-roster{flex-direction:row;overflow:auto;flex:none;padding:6px}.rob-item{min-width:150px;padding:7px}.rob-item-psa{width:33px;height:33px;font-size:15px}.rob-item-text strong{font-size:11px}.rob-item-text small{font-size:9px}.rob-workbench{min-height:290px;overflow:auto;padding:11px}.rob-work-body{grid-template-columns:100px minmax(0,1fr);gap:10px}.rob-card-preview{height:170px}.rob-card-preview .psa-value{font-size:29px}.rob-card-preview .ability-name{font-size:7px}.rob-card-preview .ability-sub{font-size:6px}.rob-work-title{font-size:15px}.rob-quote{flex-direction:column;align-items:stretch;padding:7px 9px}.rob-quote button{padding:7px}.rob-bottom{padding:8px;font-size:7px}.card-popover{width:min(320px,calc(100vw - 14px));max-height:65dvh;top:auto!important;bottom:8px!important;left:50%!important;transform:translateX(-50%)}.pack-inspect .peek-traits{display:none}}
+@media(max-width:620px){.desk-body{flex:0 0 auto}.desk-content{flex:0 0 auto}.desk-apps{min-height:0;align-items:start}.desk-app{height:157px;min-height:157px}.desk-widget{min-height:0}.desk-divider{margin-top:9px}.desk-side{display:block}}
 </style>
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
 <header>
-  <div class="brand"><div class="brandmark" aria-hidden="true"></div><div><div class="brandname">FRAMED<span> OR </span>ELSE</div><div class="brand-sub">The card market</div></div></div>
-  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Test wallet</label><strong id="wallet">£150</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div><div class="head-stat chrome" title="Earn one ChromeCoin per round you win. ChromeCoins survive game over."><label>ChromeCoins</label><strong id="chromeCoins">◈ 0</strong></div></div>
+  <div class="brand"><div class="brandmark" aria-hidden="true"></div><div><div class="brandname">FRAMED<span> OR </span>ELSE</div><div class="brand-sub">COLLECTION DESKTOP · V1</div></div></div>
+  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Wallet</label><strong id="wallet">£150</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div><div class="head-stat chrome" title="Earn one ChromeCoin per round you win. ChromeCoins survive game over."><label>ChromeCoins</label><strong id="chromeCoins">◈ 0</strong></div></div>
 </header>
-<main>
-  <div class="intro"><div><div class="eyebrow">Collection starts here</div><h1>THE<br>MARKET<span style="color:var(--mint)">.</span></h1><p class="subtitle">Five randomly generated Common cards. Every listing has at least one notable factor. Inspect the details, acquire favourites and protect up to 20 cards in your vault.</p></div><div class="actions"><button id="oddsBtn" class="btn outline">◫ &nbsp; Pull odds</button><button id="roundBtn" class="btn outline" title="Enter the next card battle">⚔ Round</button><button id="refreshBtn" class="btn primary">↻ Refresh · £4</button></div></div>
+<section id="desktopView" class="desktop-view" aria-label="Collection desktop">
+ <div class="desk-shell">
+  <div class="desk-bar"><span><span class="desk-live-dot"></span> FRAMED OS <span class="desk-bar-path">/ HOME</span></span><span id="deskBarRound">ROUND 1 · READY</span></div>
+  <div class="desk-body">
+   <div class="desk-hero"><span class="desk-kicker">YOUR PERSONAL COLLECTION DESKTOP</span><h1>Framed <span>Or Else.</span></h1><p>Build something worth protecting. Choose where to go next.</p></div>
+   <div class="desk-content">
+    <div class="desk-apps" aria-label="Desktop shortcuts">
+     <button class="desk-app" id="desktopMarket"><span class="desk-app-icon house-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 24 9l17 13v19H7z" fill="#d4dce8" stroke="#344355" stroke-width="2.4" stroke-linejoin="round"/><path d="M4 22 24 5l20 17" fill="none" stroke="#344355" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 41V27h9v14" fill="#8b9bb0" stroke="#344355" stroke-width="2"/></svg></span><span class="desk-app-title">Market</span><span class="desk-app-desc">Cards, packs & trading</span></button>
+     <button class="desk-app" id="desktopRob"><span class="desk-app-icon rob-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="14" r="9" fill="#9aa3af" stroke="#4b5563" stroke-width="2.5"/><path d="M9 43c0-11 6-17 15-17s15 6 15 17" fill="#9aa3af" stroke="#4b5563" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 13h16" stroke="#636d7b" stroke-width="2"/></svg></span><span class="desk-app-title">Rob's Site</span><span class="desk-app-desc">Repair & restore cards</span></button>
+     <button class="desk-app battle-app" id="desktopRound"><span class="desk-app-icon battle-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M11 7 41 37M37 41l5-5M6 12l5-5M37 7 7 37M6 36l5 5M41 12l-5-5" stroke="#b9c6d5" stroke-width="4" stroke-linecap="round"/></svg></span><span class="desk-app-title" id="desktopBattleName">Next Round</span><span class="desk-app-desc" id="desktopBattleText">Enter the card arena</span></button>
+    </div>
+    <div class="desk-side">
+     <div class="desk-widget"><span class="widget-label">RUN STATUS</span><strong id="deskRoundBig">Round 01</strong><p id="deskRunState">Prepare your formation, then challenge the next framed enemy.</p><div class="desk-divider"></div><div class="desk-widget-stats"><div><small>COLLECTION</small><b id="deskSaved">0 / 20</b></div><div><small>CHROMECOINS</small><b id="deskChrome">◈ 0</b></div></div></div>
+     <div class="desk-widget desk-feature"><span class="widget-label">FROM YOUR COLLECTION</span><div id="deskFeatureContent" class="desk-feature-content"></div></div>
+    </div>
+   </div>
+  </div>
+  <div class="desk-taskbar"><span>▦ &nbsp; FRAMED OS</span><span>LOCALLY SAVED COLLECTION <span class="desk-live-dot"></span></span></div>
+ </div>
+</section>
+<main id="marketView" aria-label="Market application">
+  <div class="intro"><div><div class="eyebrow">Collection starts here</div><button class="nav-back" id="marketHome">← Desktop</button><h1>MARKET<span style="color:var(--mint)">.</span></h1><p class="subtitle">Five randomly generated Common cards. Every listing has at least one notable factor. Inspect the details, acquire favourites and protect up to 20 cards in your vault.</p></div><div class="actions"><button id="oddsBtn" class="btn outline">◫ &nbsp; Pull odds</button><button id="roundBtn" class="btn outline" title="Enter the next card battle">⚔ Round</button><button id="refreshBtn" class="btn primary">↻ Refresh · £4</button></div></div>
   <div class="section-head"><div class="section-heading">01 &nbsp; / &nbsp; Today's selection <span class="tiny-dot"></span> <span id="refreshNo">Drop #1</span> <span class="round-label" id="roundLabel">Round 1</span></div><div class="section-note">10 Common effects · 10% each · Refresh cost rises · resales pay 25%</div></div>
   <section aria-label="Five market cards" class="market-grid" id="marketGrid"></section>
   <div class="bottom-bar"><div class="end-note pack-shop" aria-label="Card packs">
@@ -120,8 +169,16 @@ body.last-chance-active #roundLabel{background:#ff747c;color:#321f34;border-colo
     <button class="pack-btn god" data-pack="3a" title="God 3A — 10 cards, each guaranteed a special Type, PSA 8+, Near Mint or Perfect"> <strong>3A</strong><span>God · 10</span><em>£100</em></button>
   </div>
 </div>
-<aside class="vault" id="vault"><button class="vault-head" id="vaultToggle" aria-expanded="true" aria-controls="vaultBody"><div class="vault-title"><div class="vault-icon">▣</div><div><small>SAFE STORAGE</small><strong>Saved cards · <span id="vaultCount">0</span>/20</strong></div></div><span class="chevron" id="chevron">⌃</span></button><div class="vault-body" id="vaultBody"><p class="vault-desc">Cards here stay protected until you put them in your battle lineup. Your collection is saved in this browser.</p><div class="slots-track"><div class="slots-fill" id="slotsFill"></div></div><div class="vault-list" id="vaultList"></div><div class="vault-note">Select a saved card for its full details or to sell it back at its current displayed value (test mode).</div></div></aside></div>
+<aside class="vault" id="vault"><button class="vault-head" id="vaultToggle" aria-expanded="true" aria-controls="vaultBody"><div class="vault-title"><div class="vault-icon">▣</div><div><small>SAFE STORAGE</small><strong>Saved cards · <span id="vaultCount">0</span>/20</strong></div></div><span class="chevron" id="chevron">⌃</span></button><div class="vault-body" id="vaultBody"><p class="vault-desc">Cards here stay protected until you put them in your battle lineup. Your collection is saved in this browser.</p><div class="slots-track"><div class="slots-fill" id="slotsFill"></div></div><div class="vault-list" id="vaultList"></div><div class="vault-note">Tap a card for a quick explanation or to sell it for 25% of its online value.</div></div></aside></div>
 </main>
+<section id="robView" class="rob-view" aria-label="Rob's restoration site">
+ <div class="rob-window">
+  <div class="rob-topbar"><div class="rob-brand"><span class="rob-avatar"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="15" r="9" fill="#a4aeba"/><path d="M7 45c1-13 7-20 17-20s16 7 17 20" fill="#a4aeba"/></svg></span><div><strong>ROB'S SITE</strong><small>PROFESSIONAL CARD RESTORATION</small></div></div><div class="rob-nav"><button class="nav-back" id="robMarket">Market</button><button class="nav-back" id="robHome">← Desktop</button></div></div>
+  <div class="rob-heading"><span class="desk-kicker">REPAIRS · CONDITION & GRADING</span><h2>Give your collection a second life.</h2><p>Restore lost PSA, repair damage, and keep your rare finds fighting. Framed cards are permanently sealed.</p></div>
+  <div class="rob-layout"><aside class="rob-library"><div class="rob-panel-title"><b>YOUR CARDS</b><span id="robCount">0 saved</span></div><div id="robRoster" class="rob-roster"></div></aside><div id="robWorkbench" class="rob-workbench"></div></div>
+  <div class="rob-bottom"><span>ROB'S SITE · INDEPENDENT REPAIRS</span><span>CHANGES ARE SAVED TO THIS BROWSER</span></div>
+ </div>
+</section>
 <section id="battleView" class="battle-view" aria-label="Card battle" aria-hidden="true">
  <div class="battle-head"><div><span class="battle-overline">FRAMED ENEMY · IMMUTABLE COLLECTION</span><h2 id="battleTitle">ROUND 1</h2></div>
   <div class="battle-actions"><button class="btn outline" id="battleBack">← Shop</button><button class="btn primary" id="battleFight">⚔ Fight!</button></div>
@@ -133,7 +190,7 @@ body.last-chance-active #roundLabel{background:#ff747c;color:#321f34;border-colo
  <div class="battle-dock"><div class="battle-dock-header"><b>▣ SAVED CARDS <small>(tap to select · drag into formation)</small></b><span id="battlePickInfo">Up to 10 space</span></div><div id="battleRoster" class="battle-roster"></div></div>
  <div class="battle-footer"><span id="battleRule">Five matchups per position · Types, PSA, Condition, Price, Element</span><span id="battlePocketInfo">Enemy pocket</span></div>
 </section>
-<div class="hovercard" id="hovercard" role="tooltip"></div>
+<div class="hovercard" id="hovercard" role="tooltip"></div><div class="card-popover" id="cardPopover" role="dialog" aria-label="Card information" aria-hidden="true"></div>
 <div class="modal-backdrop" id="modal" aria-hidden="true"><div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalWindow"><div class="modal-top"><div class="h-eyebrow" id="modalHeading">CARD FILE</div><button class="modal-close" id="modalClose" aria-label="Close details">×</button></div><div id="modalContent"></div></div></div>
 <div class="pack-backdrop" id="packModal" aria-hidden="true"><div class="pack-window" role="dialog" aria-modal="true" aria-labelledby="packHeading">
  <div class="pack-top"><div><div class="pack-eyebrow">PACK OPENING · CHOOSE ONE TO KEEP</div><h2 id="packHeading">Normal 1A</h2><p id="packHelp">Tap a card to inspect it. Select one to keep; another will be sold at random for 25% of market value.</p></div><button class="modal-close" id="packClose" aria-label="Return to shop">×</button></div>
@@ -245,7 +302,111 @@ try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&Array.isArra
 function persist(){try{localStorage.setItem(KEY,JSON.stringify({market,saved,wallet,drop,round,refreshCount,pendingPack,enemy,lineup,inBattle,lastChance,chromeCoins,runChromeEarned}));}catch(e){}}
 function refreshPrice(){return REFRESH_BASE+refreshCount*REFRESH_STEP;}
 const $=id=>document.getElementById(id),grid=$('marketGrid'),hover=$('hovercard'),modal=$('modal');
-let toastTimer=null,hoverTimer=null,modalCardId=null,modalOdds=false;
+let toastTimer=null,hoverTimer=null,modalCardId=null,modalOdds=false,activeView="desktop",restoringId=null;
+function setView(name){
+ activeView=name;
+ $('desktopView').classList.toggle('active',name==='desktop');
+ $('marketView').classList.toggle('active',name==='market');
+ $('robView').classList.toggle('active',name==='rob');
+ $('desktopView').setAttribute('aria-hidden',String(name!=='desktop'));
+ $('marketView').setAttribute('aria-hidden',String(name!=='market'));
+ $('robView').setAttribute('aria-hidden',String(name!=='rob'));
+ closeCardPopup();hideHover();
+ if(name==='desktop')renderDesktop();
+ if(name==='rob')renderRob();
+}
+function renderDesktop(){
+ $('deskRoundBig').textContent='Round '+String(round).padStart(2,'0');
+ $('deskBarRound').textContent=(lastChance?'LAST CHANCE · ':'ROUND ')+round;
+ $('deskRunState').textContent=lastChance?'LAST CHANCE · Win the next fight or lose this run.':`Your opponent has ${enemy.lineup.length} framed card${enemy.lineup.length===1?'':'s'}. Prepare your cards, then enter the arena.`;
+ $('deskSaved').textContent=saved.length+' / 20';$('deskChrome').textContent='◈ '+chromeCoins;
+ $('desktopBattleName').textContent=lastChance?'Last Chance':'Next Round';
+ $('desktopBattleText').textContent=lastChance?'One final fight to survive':'Enter the card arena';
+ $('desktopRound').classList.toggle('desk-danger',lastChance);
+ const c=saved[0]||market[0], isOwned=saved.length>0;
+ $('deskFeatureContent').innerHTML=c?`<div class="card-stage">${cardHTML(c)}</div><div class="desk-feature-desc"><strong>${safe(arche(c).name)}</strong><span>PSA ${c.psa} · ${el(c).icon} ${safe(el(c).name)}</span><span>${money(calcPrice(c))} online value</span><em>${isOwned?'Saved collection':'Market discovery'}</em></div>`:'<span>No cards available</span>';
+}
+function restorePrice(c,points){
+ const t=Math.min(10,c.psa+points), factor=(1+Math.max(0,numericType(c)-1)*.13+(c.quality==='near'?.12:0)+(c.conditions.misprinted?.18:0)+(c.conditions.ink?.17:0))*(c.conditions.burnt?1.55:1)*(c.conditions.crimped?.65:1);
+ let amt=0;for(let p=c.psa+1;p<=t;p++)amt+=(2+p*.65+Math.max(0,p-7)*.95)*factor;
+ return Math.round(amt*100)/100;
+}
+function damagePrice(c,kind){
+ const factor=(1+Math.max(0,numericType(c)-1)*.12+(c.conditions.misprinted?.2:0)+(c.conditions.ink?.16:0))*(c.conditions.crimped?.65:1);
+ return Math.round((kind==='burnt'?7:11)*factor*100)/100;
+}
+function renderRob(){
+ if(!restoringId||!saved.some(c=>c.id===restoringId))restoringId=saved[0]?.id||null;
+ $('robCount').textContent=saved.length+' saved';
+ $('robRoster').innerHTML=saved.length?saved.map(c=>`<button class="rob-item ${restoringId===c.id?'selected':''}" data-rob-select="${safe(c.id)}"><span class="rob-item-psa">${c.psa}</span><span class="rob-item-text"><strong>${safe(arche(c).name)}</strong><small>${c.protection==='framed'?'🔒 Framed':c.conditions.burnt?'Burnt · needs repair':c.conditions.ripped?'Ripped · needs repair':c.psa===10?'PSA 10':'PSA '+c.psa+' / 10'} · ${money(calcPrice(c))}</small></span></button>`).join(''):'<div class="rob-empty"><strong>Nothing in storage</strong>Buy or open a pack in the Market to get started.</div>';
+ const c=saved.find(x=>x.id===restoringId);
+ if(!c){$('robWorkbench').innerHTML='<div class="rob-empty"><strong>Nothing to restore yet</strong>Select a card from your saved collection to see repair quotes.</div>';return;}
+ const frozen=c.protection==='framed', gap=10-c.psa, q=[];
+ if(!frozen){
+  for(const n of [1,3,10]){
+   const points=Math.min(n,gap);if(points<=0)continue;
+   if(n===3&&gap<2||n===10&&gap<4)continue;
+   const price=restorePrice(c,points),dest=c.psa+points;
+   q.push(`<div class="rob-quote"><div class="rob-quote-detail"><strong>${n===10?'Full restoration':`Restore +${points} PSA`}</strong><small>PSA ${c.psa} → ${dest} · ${points} grade${points===1?'':'s'}</small></div><button data-restore="psa:${points}" ${wallet<price?'disabled':''}>${money(price)}</button></div>`);
+  }
+  if(c.conditions.burnt){const price=damagePrice(c,'burnt');q.push(`<div class="rob-quote"><div class="rob-quote-detail"><strong>Repair Burnt</strong><small>Remove the Burnt condition and stop accelerated PSA decay</small></div><button data-restore="burnt" ${wallet<price?'disabled':''}>${money(price)}</button></div>`);}
+  if(c.conditions.ripped){const price=damagePrice(c,'ripped');q.push(`<div class="rob-quote"><div class="rob-quote-detail"><strong>Repair Ripped</strong><small>Remove Ripped and grant Near Mint (Perfect stays Perfect)</small></div><button data-restore="ripped" ${wallet<price?'disabled':''}>${money(price)}</button></div>`);}
+ }
+ $('robWorkbench').innerHTML=`<div class="rob-work-title">${safe(arche(c).name)}</div><div class="rob-work-sub">PSA ${c.psa} / 10 · ${money(calcPrice(c))} current online value · ${safe(protectedName(c))}</div><div class="rob-work-body"><div class="rob-card-preview">${cardHTML(c)}</div><div class="rob-quote-list">${frozen?'<div class="rob-empty"><strong>Permanently framed</strong>This card is sealed. Its PSA, condition and value cannot be changed.</div>':q.length?q.join(''):'<div class="rob-empty"><strong>Already in great shape</strong>No grade loss or damage to repair.</div>'}<p class="rob-work-note">Rob charges more for specialist traits and severe damage. Crimped cards receive a discount. Repairs deduct money immediately and remain saved.</p></div></div>`;
+}
+function doRestore(kind){
+ const c=saved.find(x=>x.id===restoringId);if(!c||c.protection==='framed'){showToast('Framed cards cannot be altered');return;}
+ let price=0,description='';
+ if(kind.startsWith('psa:')){const n=Math.min(10-c.psa,Number(kind.slice(4)));if(!Number.isInteger(n)||n<=0)return;price=restorePrice(c,n);description='Restored '+n+' PSA';}
+ else if(kind==='burnt'&&c.conditions.burnt){price=damagePrice(c,'burnt');description='Burnt repaired';}
+ else if(kind==='ripped'&&c.conditions.ripped){price=damagePrice(c,'ripped');description='Ripped repaired · Near Mint';}
+ else return;
+ if(wallet<price){showToast('Not enough cash for this repair');return;}
+ wallet=Math.round((wallet-price)*100)/100;
+ if(kind.startsWith('psa:'))c.psa+=Number(kind.slice(4));
+ else if(kind==='burnt')c.conditions.burnt=false;
+ else if(kind==='ripped'){c.conditions.ripped=false;if(c.quality!=='perfect')c.quality='near';}
+ closeCardPopup();render();renderRob();showToast(description+' · '+money(price));
+}
+function cardExplanations(c){
+ const rows=[];
+ for(const t of typesOf(c))rows.push([t.name,`+${t.score} Type strength. The Type is permanent and affects market value.`]);
+ if(c.quality==='near')rows.push(['Near Mint','×1.5 market value and applicable combat attributes.']);
+ if(c.quality==='perfect')rows.push(['Perfect Condition','PSA 10 when pulled, ×2 market value, prized by collectors.']);
+ if(c.conditions.misprinted)rows.push(['Misprinted','Strengthens beneficial effects and amplifies penalties, except Type.']);
+ if(c.conditions.ink)rows.push(['Ink Error',`Ability multiplier ×${(c.inkFactor||1).toFixed(1)}; printed PSA looks glitched.`]);
+ if(c.conditions.ripped)rows.push(['Ripped','Reduced market value. Rob can repair it and grant Near Mint.']);
+ if(c.conditions.burnt)rows.push(['Burnt',`Loses ${c.conditions.misprinted?4:2} PSA every unprotected battle. Rob can repair it.`]);
+ if(c.conditions.crimped)rows.push(['Crimped','Takes half a lineup slot; lower card value and cheaper repairs.']);
+ if(c.played)rows.push([`Played ${c.played} times`,'Keeps a permanent history of battles. Grade restoration does not erase history.']);
+ if(c.protection==='framed')rows.push(['Framed','Forever freezes PSA, market value and attributes; cannot be repaired.']);
+ if(c.protection==='foil'||c.protection==='artfoil')rows.push([protectedName(c),`Prevents damage for ${c.foilRounds??3} more played rounds.${c.protection==='artfoil'?' Raises value ×1.5.':''}`]);
+ if(c.protection==='antimatter')rows.push(['Anti-Matter','Improves PSA when played; disintegrates after reaching PSA 10.']);
+ rows.push([`${el(c).icon} ${el(c).name}`,`Beats ${el(c).beats} in Element matchups.`]);
+ return rows;
+}
+function peekHTML(c,actions=false){
+ const a=arche(c),rows=cardExplanations(c),owned=saved.some(x=>x.id===c.id),forSale=market.some(x=>x.id===c.id)&&!owned;
+ return `<div class="peek-top"><div><div class="peek-eyebrow">COMMON · ${safe(a.kind)}</div><h3>${safe(a.name)}</h3></div>${actions?'<button class="peek-close" data-pop-close aria-label="Close card details">×</button>':''}</div><div class="peek-effect">${safe(a.effect)}</div><div class="peek-stats"><span>PSA ${c.psa}</span><span>${money(calcPrice(c))} market</span><span>${numericType(c)} type</span></div><div class="peek-traits">${rows.map(([name,description])=>`<div class="peek-trait"><b>${safe(name)}</b><small>${safe(description)}</small></div>`).join('')}</div>${actions&&(forSale||owned)?`<div class="peek-actions">${forSale?`<button data-pop-buy="${safe(c.id)}" ${wallet<calcPrice(c)||saved.length>=20?'disabled':''}>${saved.length>=20?'Vault full':'Save · '+money(calcPrice(c))}</button>`:''}${owned&&!inBattle?`<button class="peek-sell" data-pop-sell="${safe(c.id)}">Sell · ${money(saleValue(c))}</button>`:''}</div>`:''}`;
+}
+function closeCardPopup(){$('cardPopover').classList.remove('open');$('cardPopover').setAttribute('aria-hidden','true');}
+function openCardPopup(c,anchor){hideHover();const p=$('cardPopover');p.innerHTML=peekHTML(c,true);p.classList.add('open');p.setAttribute('aria-hidden','false');
+ const b=anchor?.getBoundingClientRect?.()||{left:innerWidth/2,right:innerWidth/2,top:innerHeight/2,bottom:innerHeight/2};
+ const width=Math.min(320,innerWidth-18);let left=b.right+12;if(left+width>innerWidth-10)left=b.left-width-12;if(left<9)left=Math.max(9,Math.min(innerWidth-width-9,b.left));
+ p.style.left=left+'px';p.style.top=Math.max(10,Math.min(b.top,innerHeight-p.offsetHeight-10))+'px';
+}
+$('cardPopover').addEventListener('click',e=>{const a=e.target.closest('[data-pop-close]');if(a){closeCardPopup();return;}const buy=e.target.closest('[data-pop-buy]');if(buy){closeCardPopup();purchase(buy.dataset.popBuy);return;}const sell=e.target.closest('[data-pop-sell]');if(sell){closeCardPopup();sellCardById(sell.dataset.popSell);}});
+function sellCardById(id){sell(id)}
+document.addEventListener('pointerdown',e=>{if(!$('cardPopover').classList.contains('open'))return;if(e.target.closest('#cardPopover,[data-inspect]'))return;closeCardPopup();});
+$('desktopMarket').addEventListener('click',()=>setView('market'));
+$('desktopRob').addEventListener('click',()=>setView('rob'));
+$('desktopRound').addEventListener('click',enterBattle);
+$('marketHome').addEventListener('click',()=>setView('desktop'));
+$('robHome').addEventListener('click',()=>setView('desktop'));
+$('robMarket').addEventListener('click',()=>setView('market'));
+$('robRoster').addEventListener('click',e=>{const b=e.target.closest('[data-rob-select]');if(b){restoringId=b.dataset.robSelect;renderRob();}});
+$('robWorkbench').addEventListener('click',e=>{const b=e.target.closest('[data-restore]');if(b){doRestore(b.dataset.restore);return;}const card=e.target.closest('[data-inspect]');if(card){const c=saved.find(x=>x.id===card.dataset.inspect);if(c)openCardPopup(c,card);}});
+$('deskFeatureContent').addEventListener('click',e=>{const b=e.target.closest('[data-inspect]');if(b){const c=saved.find(x=>x.id===b.dataset.inspect)||market.find(x=>x.id===b.dataset.inspect);if(c)openCardPopup(c,b);}});
 function showToast(t){const box=$('toast');box.textContent=t;box.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.remove('show'),2400);}
 function cardHTML(c){const a=arche(c),ty=visualType(c),e=el(c),cnd=c.conditions;
  let classes=['card-face','elem-'+c.element,ty,c.quality==='near'?'near-mint':'',c.quality==='perfect'?'perfect':'',cnd.burnt?'burnt':'',cnd.ripped?'ripped':'',cnd.crimped?'crimped':'',cnd.misprinted?'misprinted':'',c.protection];
@@ -270,15 +431,16 @@ function fullData(c,compact=false){const a=arche(c),element=el(c),price=money(ca
 function render(){grid.innerHTML=market.map((c,i)=>{const owned=saved.some(s=>s.id===c.id),price=calcPrice(c),a=arche(c);return `<article class="listing ${owned?'acquired':''}"><div class="card-stage">${cardHTML(c)}</div><div class="listing-footer"><div><div class="price-label">Online value</div><div class="price-value">${money(price)}</div></div><button class="btn tiny" data-buy="${safe(c.id)}" ${owned||saved.length>=20||wallet<price?'disabled':''}>${owned?'Saved ✓':saved.length>=20?'Vault full':wallet<price?'Too costly':'＋ Save'}</button></div><div class="card-quick">${c.types.map(t=>TYPE_RULES.find(x=>x.id===t)?.name).join(' · ')}</div><div class="quick-badges"><span>${el(c).icon} ${el(c).name}</span>${c.protection!=='none'?`<span>${safe(protectedName(c))}</span>`:''}${c.quality!=='normal'?`<span>${c.quality==='near'?'Near Mint':'Perfect'}</span>`:''}</div></article>`;}).join('');
  $('wallet').textContent=money(wallet);$('chromeCoins').textContent='◈ '+chromeCoins;document.body.classList.toggle('last-chance-active',lastChance);$('roundBtn').textContent=lastChance?'⚠ LAST CHANCE':'⚔ Round';$('savedCountTop').textContent=saved.length+' / 20';$('vaultCount').textContent=saved.length;$('slotsFill').style.width=(saved.length/20*100)+'%';$('refreshNo').textContent='Drop #'+drop;$('roundLabel').textContent=lastChance?'⚠ LAST CHANCE · Round '+round:'Round '+round;$('refreshBtn').textContent='↻ Refresh · '+money(refreshPrice());$('refreshBtn').disabled=wallet<refreshPrice()||!!pendingPack;$('roundBtn').disabled=!!pendingPack;document.querySelectorAll('[data-pack]').forEach(b=>{const p=PACKS[b.dataset.pack];b.disabled=!!pendingPack?false:saved.length>=20||wallet<p.price;b.classList.toggle('pending',!!pendingPack);b.title=pendingPack?'Resume your unopened pack before purchasing another.':(b.title||'');});
  $('vaultList').innerHTML=saved.map(c=>`<button class="vault-item" data-inspect="${safe(c.id)}" title="${safe(arche(c).name)} · PSA ${c.psa}" aria-label="Inspect saved ${safe(arche(c).name)}"><div class="em">${el(c).icon}</div><strong>${c.psa}</strong><small>${safe(arche(c).name)}</small></button>`).join('')+Array.from({length:20-saved.length},()=>'<div class="vault-empty-slot" aria-hidden="true"></div>').join('');
+ if(activeView==='desktop')renderDesktop();if(activeView==='rob')renderRob();
  persist();
 }
 function findCard(id){return [...market,...saved].find(c=>c.id===id)}
-function tooltipAt(elm,c){if(window.matchMedia('(hover: none), (pointer: coarse)').matches||modal.classList.contains('open'))return;hover.innerHTML=fullData(c,true);hover.classList.add('visible');const r=elm.getBoundingClientRect(),w=330,pad=13;const left=r.right+w+18<innerWidth?r.right+12:Math.max(pad,r.left-w-12);hover.style.left=Math.min(innerWidth-w-pad,Math.max(pad,left))+'px';const h=hover.offsetHeight;hover.style.top=Math.max(pad,Math.min(innerHeight-h-pad,r.top))+'px';}
+function tooltipAt(elm,c){if(window.matchMedia('(hover: none), (pointer: coarse)').matches||modal.classList.contains('open')||$('cardPopover').classList.contains('open'))return;hover.innerHTML=peekHTML(c,false);hover.classList.add('visible');const r=elm.getBoundingClientRect(),w=290,pad=10;let x=r.right+10;if(x+w+pad>window.innerWidth)x=r.left-w-10;hover.style.left=Math.max(pad,x)+'px';hover.style.top=Math.max(pad,Math.min(r.top,window.innerHeight-hover.offsetHeight-pad))+'px';}
 function hideHover(){hover.classList.remove('visible')}
-function modalOpen(c){modalOdds=false;modalCardId=c.id;hideHover();const a=arche(c),owned=saved.some(s=>s.id===c.id),marketItem=market.some(s=>s.id===c.id),price=calcPrice(c);$('modalHeading').textContent=enemy.lineup.some(x=>x.id===c.id)?'ENEMY FRAMED CARD':owned?'SAVED CARD FILE':'MARKET CARD FILE';$('modalContent').innerHTML=`<div class="modal-detail"><div><div class="card-stage">${cardHTML(c)}</div></div><div class="modal-info"><h2 id="modalTitle">${safe(a.name)}</h2><p>${safe(a.effect)}</p>${fullData(c,false).replace(/<div class="h-eyebrow">[\s\S]*?<div class="h-effect">[\s\S]*?<\/div>/,'')}</div></div><div class="modal-actions">${marketItem&&!owned?`<button class="btn primary" data-buy="${safe(c.id)}" ${saved.length>=20||wallet<price?'disabled':''}>${saved.length>=20?'Vault full':wallet<price?'Insufficient test credits':'Save to vault · '+money(price)}</button>`:''}${owned&&!inBattle?`<button class="btn" data-sell="${safe(c.id)}">Sell for ${money(saleValue(c))}</button>`:''}<button class="btn outline" data-close="true">Close</button></div><div class="small-print">All 10 Common cards have equal 10% pull odds. Card traits are weighted independently, and listings with no notable trait are rerolled.</div>`;modal.classList.add('open');modal.setAttribute('aria-hidden','false');$('modalWindow').scrollTop=0;}
-function purchase(id){const c=market.find(x=>x.id===id);if(!c){showToast('Card not in current market');return;}if(saved.some(x=>x.id===id)){showToast('Already saved');return;}if(saved.length>=20){showToast('Vault is full (20 cards)');return;}const p=calcPrice(c);if(wallet<p){showToast('Not enough test credits');return;}wallet=Math.round((wallet-p)*100)/100;let acquired=JSON.parse(JSON.stringify(c));if(acquired.protection==='framed'&&!Number.isFinite(acquired.frozenPrice))acquired.frozenPrice=calcPrice(c);saved.push(acquired);hideHover();render();if(modal.classList.contains('open'))modalOpen(c);showToast('Saved '+arche(c).name+' to your vault');}
-function sell(id){const i=saved.findIndex(c=>c.id===id);if(i<0)return;const c=saved[i];wallet=Math.round((wallet+saleValue(c))*100)/100;lineup=lineup.filter(id=>id!==c.id);saved.splice(i,1);modalClose();render();showToast('Sold '+arche(c).name+' for '+money(saleValue(c)));}
-function modalClose(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');modalCardId=null;modalOdds=false;}
+function modalOpen(c,anchor){openCardPopup(c,anchor);}
+function purchase(id){closeCardPopup();const c=market.find(x=>x.id===id);if(!c){showToast('Card not in current market');return;}if(saved.some(x=>x.id===id)){showToast('Already saved');return;}if(saved.length>=20){showToast('Vault is full (20 cards)');return;}const p=calcPrice(c);if(wallet<p){showToast('Not enough cash');return;}wallet=Math.round((wallet-p)*100)/100;let acquired=JSON.parse(JSON.stringify(c));if(acquired.protection==='framed'&&!Number.isFinite(acquired.frozenPrice))acquired.frozenPrice=calcPrice(c);saved.push(acquired);hideHover();render();if(modal.classList.contains('open'))modalOpen(c);showToast('Saved '+arche(c).name+' to your vault');}
+function sell(id){closeCardPopup();const i=saved.findIndex(c=>c.id===id);if(i<0)return;const c=saved[i];wallet=Math.round((wallet+saleValue(c))*100)/100;lineup=lineup.filter(id=>id!==c.id);saved.splice(i,1);modalClose();render();showToast('Sold '+arche(c).name+' for '+money(saleValue(c)));}
+function modalClose(){closeCardPopup();modal.classList.remove('open');modal.setAttribute('aria-hidden','true');modalCardId=null;modalOdds=false;}
 function oddsRow(label,val){return `<div class="odds-row"><span>${label}</span><strong>${val}</strong></div>`}
 const PASS=1-(.99*.97*.94*.88*.80)*(.82*.97*.94*.94*.95*.98*.92)*.78;
 const percent=x=>(100*x).toFixed(2).replace(/\.00$/,'')+'%';
@@ -300,8 +462,8 @@ function vaultToggle(open){const expand=typeof open==='boolean'?open:$('vaultBod
 function itemFromEvent(e){return e.target.closest('[data-inspect]')}
 grid.addEventListener('pointerover',e=>{const elm=itemFromEvent(e);if(!elm||elm.contains(e.relatedTarget))return;const c=findCard(elm.dataset.inspect);if(c)tooltipAt(elm,c)});
 grid.addEventListener('pointerout',e=>{const elm=itemFromEvent(e);if(!elm)return;if(elm.contains(e.relatedTarget))return;hideHover();});
-grid.addEventListener('click',e=>{const buy=e.target.closest('[data-buy]');if(buy){purchase(buy.dataset.buy);return;}const inspect=itemFromEvent(e);if(inspect){const c=findCard(inspect.dataset.inspect);if(c)modalOpen(c);}});
-$('vaultList').addEventListener('click',e=>{const inspect=itemFromEvent(e);if(inspect){const c=findCard(inspect.dataset.inspect);if(c)modalOpen(c);}});
+grid.addEventListener('click',e=>{const buy=e.target.closest('[data-buy]');if(buy){purchase(buy.dataset.buy);return;}const inspect=itemFromEvent(e);if(inspect){const c=findCard(inspect.dataset.inspect);if(c)modalOpen(c,inspect);}});
+$('vaultList').addEventListener('click',e=>{const inspect=itemFromEvent(e);if(inspect){const c=findCard(inspect.dataset.inspect);if(c)modalOpen(c,inspect);}});
 $('refreshBtn').addEventListener('click',()=>{
  if(pendingPack){showToast('Finish your pack first');return;}
  const price=refreshPrice();if(wallet<price){showToast('Not enough credits for refresh');return;}
@@ -326,7 +488,7 @@ function renderPack(){
  if(!packSelection||!cards.some(c=>c.id===packSelection))packSelection=cards[0].id;
  const focused=cards.find(c=>c.id===packSelection);
  $('packList').innerHTML=cards.map((c,i)=>`<div class="pack-entry ${c.id===packSelection?'selected':''}" data-pack-select="${safe(c.id)}" title="Inspect ${safe(arche(c).name)}"><div class="pack-entry-num">#${i+1}</div><div class="card-stage">${cardHTML(c)}</div><div class="pack-entry-price">${money(calcPrice(c))}</div></div>`).join('');
- $('packInspect').innerHTML=`<button class="btn primary" data-pack-keep="${safe(focused.id)}" ${saved.length>=20?'disabled':''}>${saved.length>=20?'Vault full':'Keep this card'}</button>${fullData(focused,true)}<p class="detail-note">One OTHER card will be randomly sold for 25% of its online market value. A pack is an investment, not guaranteed profit. The remaining cards are discarded.</p>`;
+ $('packInspect').innerHTML=`<button class="btn primary" data-pack-keep="${safe(focused.id)}" ${saved.length>=20?'disabled':''}>${saved.length>=20?'Vault full':'Keep this card'}</button>${peekHTML(focused,false)}<p class="detail-note">One OTHER card will be randomly sold for 25% of its online market value. A pack is an investment, not guaranteed profit. The remaining cards are discarded.</p>`;
  $('packProgress').textContent=cards.length+' choices · 1 keep · 1 sold';
 }
 function startPack(id){
@@ -476,9 +638,9 @@ function drawBattle(){
 function enterBattle(){
  if(pendingPack){showToast('Finish your pack first');return;}
  if(modal.classList.contains('open'))modalClose();if(packModal.classList.contains('open'))packClose();
- ensureEnemy();inBattle=true;hideHover();drawBattle();showToast(lastChance?'LAST CHANCE · Win this fight or lose your run!':'Round '+round+' · Enemy gained one framed card');
+ ensureEnemy();inBattle=true;setView('battle');drawBattle();showToast(lastChance?'LAST CHANCE · Win this fight or lose your run!':'Round '+round+' · Enemy gained one framed card');
 }
-function backToShop(){inBattle=false;selectedForBattle=null;drawBattle();render();}
+function backToShop(){inBattle=false;selectedForBattle=null;drawBattle();render();setView('desktop');}
 function ageFightingCard(c){
  c.played=(c.played||0)+1;
  if(c.protection==='framed')return false;
@@ -517,7 +679,7 @@ function resolveBattle(){
   market=generateMarket();drop++;
   title=wasLastChance?'LAST CHANCE SURVIVED!':'VICTORY';
   summary=`${wasLastChance?'<p><b>Comeback!</b> You survived your final chance and can continue normally. Any cards sold after your earlier defeat remain sold.</p>':''}<p><b>${f.diff.text}</b> · ×${f.diff.mult} rewards · <b>+${money(reward)}</b> awarded.</p><p><b>+1 ChromeCoin</b> · ${chromeCoins} total (ChromeCoins survive a game over).</p>`;
-  nextLabel='Continue to shop';
+  nextLabel='Continue to desktop';
  } else if(!wasLastChance){
   // The entire collection is liquidated except for permanently framed cards.
   const liquidated=saved.filter(c=>c.protection!=='framed');
@@ -527,7 +689,7 @@ function resolveBattle(){
   lineup=lineup.filter(id=>saved.some(c=>c.id===id));
   lastChance=true;
   title='LAST CHANCE!';heading='DEFEAT · FINAL ATTEMPT';
-  summary=`<p>You lost Round ${finishedRound}. <b>${liquidated.length} unframed card${liquidated.length===1?'':'s'}</b> automatically sold for <b>${money(proceeds)}</b> total at the usual 25% cash-out rate.</p><p><b>${saved.length} framed card${saved.length===1?' remains':'s remain'}.</b> Return to the shop, rebuild with the money you have, then fight <b>this same enemy formation</b> one last time.</p><p><b>Win:</b> recover and continue. <b>Lose:</b> game over, resetting your cards, money and progress. Your ChromeCoins survive.</p>`;
+  summary=`<p>You lost Round ${finishedRound}. <b>${liquidated.length} unframed card${liquidated.length===1?'':'s'}</b> automatically sold for <b>${money(proceeds)}</b> total at the usual 25% cash-out rate.</p><p><b>${saved.length} framed card${saved.length===1?' remains':'s remain'}.</b> Return to the desktop, rebuild with the money you have, then fight <b>this same enemy formation</b> one last time.</p><p><b>Win:</b> recover and continue. <b>Lose:</b> game over, resetting your cards, money and progress. Your ChromeCoins survive.</p>`;
   nextLabel='Prepare Last Chance';
  } else {
   const completed=finishedRound-1,coinsEarned=runChromeEarned,totalCoins=chromeCoins;
@@ -536,7 +698,7 @@ function resolveBattle(){
   summary=`<p>Last Chance failed at Round ${finishedRound}. The run is over.</p><p><b>Rounds passed: ${completed}</b> · <b>${coinsEarned} ChromeCoin${coinsEarned===1?'':'s'} earned this run</b>.</p><p><b>◈ ${totalCoins} ChromeCoins</b> remain permanently saved. Your old money, cards, frames, enemy and round progress have been reset. A new run starts with £75.</p>`;
   nextLabel='Start New Run';
  }
- inBattle=false;selectedForBattle=null;drawBattle();render();
+ inBattle=false;selectedForBattle=null;drawBattle();render();setView('desktop');
  $('modalHeading').textContent=heading;
  $('modalContent').innerHTML=`<div class="battle-result"><h2 id="modalTitle">${title} · Round ${finishedRound}</h2><div class="battle-result-scores"><div><b>${f.wins}</b><span>Your points</span></div><div><b>${f.losses}</b><span>Enemy points</span></div><div><b>${f.ties}</b><span>Ties</span></div></div>${summary}<p>${playedCards.length} played cards added a Played round.${erased.length?' '+erased.length+' Anti-Matter card(s) disintegrated.':''}</p><button class="btn primary" data-close="true">${nextLabel}</button></div>`;
  modal.classList.add('open');modal.setAttribute('aria-hidden','false');
@@ -555,7 +717,7 @@ $('battleGrid').addEventListener('click',e=>{
  const l=e.target.closest('[data-left]');if(l){relocate(l.dataset.left,-1);return;}
  const r=e.target.closest('[data-right]');if(r){relocate(r.dataset.right,1);return;}
  const slot=e.target.closest('[data-slot]');if(slot&&selectedForBattle){slotAdd(selectedForBattle,Number(slot.dataset.slot));return;}
- const inspect=e.target.closest('[data-inspect]');if(inspect){const card=[...enemy.lineup,...saved].find(x=>x.id===inspect.dataset.inspect);if(card)modalOpen(card);}
+ const inspect=e.target.closest('[data-inspect]');if(inspect){const card=[...enemy.lineup,...saved].find(x=>x.id===inspect.dataset.inspect);if(card)modalOpen(card,inspect);}
 });
 // Native drag-and-drop for desktop; tap-select plus arrows for touch screens.
 let draggedId=null;
@@ -581,10 +743,10 @@ document.addEventListener('pointerup',e=>{
  if(elem){slotAdd(d.id,Number(elem.dataset.slot));}
 });
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){packClose();modalClose();hideHover();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){packClose();modalClose();closeCardPopup();hideHover();}});
 window.addEventListener('scroll',hideHover,{passive:true});window.addEventListener('resize',hideHover);
 render();
-if(inBattle){ensureEnemy();drawBattle();}
+if(inBattle){ensureEnemy();setView('battle');drawBattle();}else setView(pendingPack?'market':'desktop');
 if(pendingPack)packOpen();
 })();
 </script>
