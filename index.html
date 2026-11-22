@@ -144,7 +144,7 @@ body.last-chance-active #roundBtn{background:#eed4d5;border-color:#d5b8bc;color:
 <div class="noise" aria-hidden="true"></div>
 <header>
   <div class="brand"><div class="brandmark" aria-hidden="true"></div><div><div class="brandname">FRAMED<span> OR </span>ELSE</div><div class="brand-sub">COLLECTION DESKTOP · V1</div></div></div>
-  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Wallet</label><strong id="wallet">£150</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div><div class="head-stat chrome" title="Earn one ChromeCoin per round you win. ChromeCoins survive game over."><label>ChromeCoins</label><strong id="chromeCoins">◈ 0</strong></div></div>
+  <div class="head-right"><span class="pill">● Market online</span><div class="head-stat"><label>Wallet</label><strong id="wallet">£100</strong></div><div class="head-stat"><label>Saved</label><strong id="savedCountTop">0 / 20</strong></div><div class="head-stat chrome" title="Earn one ChromeCoin per round you win. ChromeCoins survive game over."><label>ChromeCoins</label><strong id="chromeCoins">◈ 0</strong></div></div>
 </header>
 <section id="desktopView" class="desktop-view" aria-label="Collection desktop">
  <div class="desk-shell">
@@ -213,6 +213,14 @@ body.last-chance-active #roundBtn{background:#eed4d5;border-color:#d5b8bc;color:
 (() => {
 'use strict';
 const KEY='frame-shift-market-v1'; // Keep the original storage key so existing saved cards are preserved.
+// Explicit one-time clean slate: /?fresh=1 wipes only this game's local browser save.
+const startFresh=new URLSearchParams(window.location.search).get('fresh')==='1';
+if(startFresh){
+ try{localStorage.removeItem(KEY);}catch(e){}
+ // Remove the reset flag so a later refresh never wipes the new save again.
+ try{const u=new URL(window.location.href);u.searchParams.delete('fresh');window.history.replaceState(null,'',u.pathname+u.search+u.hash);}catch(e){}
+}
+
 const PACKS={
  '1a':{label:'Normal 1A',count:10,price:12,tier:'normal'},
  '1b':{label:'Normal 1B',count:20,price:24,tier:'normal'},
@@ -303,7 +311,7 @@ function condLabels(c){const a=[c.quality==='perfect'?'Perfect Condition':c.qual
  if(c.conditions.misprinted)a.push('Misprinted');if(c.conditions.ink)a.push('Ink Error ×'+c.inkFactor.toFixed(1));if(c.conditions.ripped)a.push('Ripped');if(c.conditions.crimped)a.push('Crimped');if(c.conditions.burnt)a.push('Burnt');if(c.played>0)a.push('Played '+c.played+' times');return a;
 }
 function protectedName(c){return PROTECT.find(x=>x.id===c.protection)?.name||'No Foil'}
-let market=generateMarket(),saved=[],wallet=75,drop=1,round=1,refreshCount=0,pendingPack=null,packSelection=null;
+let market=generateMarket(),saved=[],wallet=100,drop=1,round=1,refreshCount=0,pendingPack=null,packSelection=null;
 let enemy={lineup:[],pocket:[],log:[]}, lineup=[],inBattle=false,selectedForBattle=null;
 let formationKey=null; // A fresh round starts with the first ten saved cards; edits survive re-entering that round.
 const enemyStackPeek=Array(10).fill(null);
@@ -705,7 +713,7 @@ function ageFightingCard(c){
 }
 function resetRun(){
  // ChromeCoins are the only permanent currency; everything else starts from zero progress.
- saved=[];market=generateMarket();wallet=75;drop=1;round=1;refreshCount=0;
+ saved=[];market=generateMarket();wallet=100;drop=1;round=1;refreshCount=0;
  pendingPack=null;packSelection=null;enemy={lineup:[],pocket:[],log:[]};lineup=[];
  inBattle=false;selectedForBattle=null;lastChance=false;runChromeEarned=0;formationKey=null;enemyStackPeek.fill(null);
  packClose();
@@ -742,7 +750,7 @@ function resolveBattle(){
   const completed=finishedRound-1,coinsEarned=runChromeEarned,totalCoins=chromeCoins;
   resetRun();
   title='GAME OVER';heading='RUN ENDED';
-  summary=`<p>Last Chance failed at Round ${finishedRound}. The run is over.</p><p><b>Rounds passed: ${completed}</b> · <b>${coinsEarned} ChromeCoin${coinsEarned===1?'':'s'} earned this run</b>.</p><p><b>◈ ${totalCoins} ChromeCoins</b> remain permanently saved. Your old money, cards, frames, enemy and round progress have been reset. A new run starts with £75.</p>`;
+  summary=`<p>Last Chance failed at Round ${finishedRound}. The run is over.</p><p><b>Rounds passed: ${completed}</b> · <b>${coinsEarned} ChromeCoin${coinsEarned===1?'':'s'} earned this run</b>.</p><p><b>◈ ${totalCoins} ChromeCoins</b> remain permanently saved. Your old money, cards, frames, enemy and round progress have been reset. A new run starts with £100.</p>`;
   nextLabel='Start New Run';
  }
  inBattle=false;selectedForBattle=null;drawBattle();render();setView('desktop');
